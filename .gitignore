@@ -1,1 +1,7 @@
 /src/main/resources/application.properties
+/target/
+/mvnw
+/mvnw.cmd
+/src/front_end/node/
+/src/front_end/node_modules/
+/src/front_end/package-lock.json

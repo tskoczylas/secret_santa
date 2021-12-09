@@ -1,0 +1,9 @@
+services:
+   backend:
+     image: skiniu/santa6000
+     ports:
+       - "80:9000"
+     restart: "always"
+
+
+
