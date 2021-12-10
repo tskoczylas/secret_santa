@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import santaUserDefault from "../data/DefaultData";
-import TokenLoading from "./TokenLoading";
+import santaUserDefault from "../../data/DefaultData";
+import SmallTemplate from "../SmallTemplate";
+import LookForToken from "./TokenIf";
 
 export const TokenContex = React.createContext();
 
@@ -31,7 +32,7 @@ export default function TokenMain() {
 
     <TokenContex.Provider value={getTokenData}>
 
-    <TokenLoading></TokenLoading>
+    <LookForToken/>
     </TokenContex.Provider>
 
 

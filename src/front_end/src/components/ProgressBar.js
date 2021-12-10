@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { TokenContex } from '../pages/TokenMain';
+import { TokenContex } from '../pages/token/TokenMain';
 
 function LinearProgressWithLabel(props) {
 

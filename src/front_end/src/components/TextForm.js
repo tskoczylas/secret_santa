@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useContext, useState } from "react";
-import { TokenContex } from "../pages/TokenMain";
+import { TokenContex } from "../pages/token/TokenMain";
 import PriceForm from "./PriceForm";
 
 export default function TextForm(props) {
@@ -60,7 +60,7 @@ export default function TextForm(props) {
   };
 
   return (
-    <Box component="form" onChange={handleOnChange} sx={{ mt: 3 }}>
+    <Box component="form" onChange={handleOnChange} sx={{ marginLeft:4, marginRight:3, mt: 3 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField

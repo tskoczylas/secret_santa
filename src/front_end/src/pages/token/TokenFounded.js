@@ -1,6 +1,6 @@
 import {  Grid, Typography } from "@mui/material";
-import ProgressBar from "../components/ProgressBar";
-import TextForm from "../components/TextForm";
+import ProgressBar from "../../components/ProgressBar";
+import TextForm from "../../components/TextForm";
 
 
 export default function TokenFounded() {
