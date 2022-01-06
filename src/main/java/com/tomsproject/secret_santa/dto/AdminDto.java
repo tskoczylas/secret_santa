@@ -1,5 +1,6 @@
 package com.tomsproject.secret_santa.dto;
 
+import com.tomsproject.secret_santa.enums.RoleEnum;
 import com.tomsproject.secret_santa.model.SantaUser;
 import lombok.*;
 
@@ -29,6 +30,8 @@ public class AdminDto {
     int firstChosenPrice;
     int secondChosenPrice;
     int thirdChosenPrice;
+    @Enumerated(EnumType.ORDINAL)
+    RoleEnum roleEnum;
 
     long medianeUserChosenPrice;
 

@@ -40,6 +40,26 @@ export default  function santaUserDefault()
   chosenPrice: data.get("gift"),
 })}
 
+
+export const  defaultUserList = [{id:"loading",email:"loading"}]
+
+
+export function defaultAdmin()
+    {return(
+    {data:  {
+    adminId: 0,
+            firstName: "Tomasz",
+        secondName: "Skoczylas",
+        login: "alex",
+        password: "1234",
+        usersAreCompleted: false,
+        percentageCompleteUsers: 10,
+        firstChosenPrice: 20,
+        secondChosenPrice: 50,
+        thirdChosenPrice: 60,
+        correctAdmin: false,
+}})}
+
 export const isComplete = (data) =>{ 
 return(
   data.firstName === "" ||

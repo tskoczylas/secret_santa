@@ -27,6 +27,7 @@ public class SantaUser {
    Admin admin;
     String giftDesc;
     int chosenPrice;
+    String email;
 
 
     public SantaUser(boolean isUserCreate,long userid) {

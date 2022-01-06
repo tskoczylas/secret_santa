@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import {useContext} from "react";
-import {createTheme, ThemeProvider} from "@mui/material";
+import {CircularProgress, createTheme, ThemeProvider} from "@mui/material";
 
 import LoadingForm from "../components/LoadingForm";
 import santa from "../jpg/santa.jpg";
@@ -29,7 +29,7 @@ export default function SmallTemplate(props) {
     return (
         <ThemeProvider theme={theme}>
 
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth={props.maxWidth}>
                 <CssBaseline/>
 
                 <Box
@@ -41,18 +41,19 @@ export default function SmallTemplate(props) {
                        borderRadius: "10px",
                         display: "flex",
                         flexDirection: "column",
-                        alignItems: "center",
+                       alignItems: "center",
                     }}
                 >
 
-                    <Grid item sm={12} xs={12} align="center">
+
                         <Avatar
 
                             sx={{width: 60, height: 60, marginTop:2}}
                             alt="santa"
                             src={santa}
                         ></Avatar>
-                    </Grid>
+
+                    {props.loading?<CircularProgress/>: "" }
 
                     {props.children}
                     <Copyright sx={{mt: 1,marginBottom:3}}/>

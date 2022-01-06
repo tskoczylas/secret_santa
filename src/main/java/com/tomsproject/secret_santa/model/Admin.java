@@ -1,8 +1,10 @@
 package com.tomsproject.secret_santa.model;
 
 
+import com.tomsproject.secret_santa.enums.RoleEnum;
 import lombok.*;
 
+import java.util.Arrays;
 import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +20,11 @@ public class Admin {
     private String password;
     private boolean usersAreCompleted;
 
+    RoleEnum roleEnum;
+
+    String email;
+
+
 
     int firstChosenPrice;
     int secondChosenPrice;
@@ -30,9 +37,31 @@ public class Admin {
                 !this.firstName.isEmpty() &&
                 !this.secondName.isEmpty() &&
                 this.usersAreCompleted;
+    }
+
+    public boolean isAdminCreatable(){
+        return this.adminId == 0 &&
+                !this.firstName.isEmpty() &&
+                !this.secondName.isEmpty() &&
+                !this.login.isEmpty()&&
+                !this.password.isEmpty()&&
+                !this.usersAreCompleted &&
+                this.firstChosenPrice!=0&&
+                this.secondChosenPrice!=0&&
+                this.thirdChosenPrice!=0&&
+                this.roleEnum!=null&&
+                Arrays.stream(RoleEnum.values()).
+                        anyMatch(v->v.
+                                name().
+                                equals(this.roleEnum.name()));
+
 
 
     }
+
+
+
+
 }
 
 

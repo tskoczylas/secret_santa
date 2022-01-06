@@ -1,8 +1,5 @@
-package com.tomsproject.secret_santa.service;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+package com.tomsproject.secret_santa.services;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ClickSend.Api.SmsApi;
@@ -12,15 +9,12 @@ import ClickSend.Model.SmsMessage;
 import ClickSend.Model.SmsMessageCollection;
 import com.tomsproject.secret_santa.dto.SantaUserDto;
 import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
-import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
+import com.tomsproject.secret_santa.services.SmsService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import static com.tomsproject.secret_santa.util.HostUtils.getHost;
-
 @Service
-public class SmsService {
+public class SmsServiceImp implements  SmsService {
     @Value("${sms.client.login}")
     String smsClientLogin;
 
@@ -35,7 +29,8 @@ public class SmsService {
 
 
 
-    private SmsApi getSmsApi() {
+    @Override
+    public SmsApi getSmsApi() {
         ApiClient defaultClient = new ApiClient();
         defaultClient.setUsername(smsClientLogin);
         defaultClient.setPassword(smsClientApi);
@@ -44,6 +39,7 @@ public class SmsService {
     }
 
 
+    @Override
     public boolean sendLotteryFinalSms(List<SantaUsersPairDto> santaUsersPairDtoSource) {
         SmsApi apiInstance = getSmsApi();
         List<SmsMessage> smsMessageList = new ArrayList<>();
@@ -77,6 +73,7 @@ public class SmsService {
     }
 
 
+    @Override
     public boolean sendRequestSMS(SantaUserDto santaUserDto) {
         SmsApi apiInstance = getSmsApi();
         List<SmsMessage> smsMessageList = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.tomsproject.secret_santa.dto;
 
+import com.tomsproject.secret_santa.enums.RoleEnum;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class SantaUserDto {
     boolean isSecondMessageSendCorrectly;
     String giftDesc;
     int chosenPrice;
+    String email;
+    @Enumerated(value = EnumType.STRING)
+    RoleEnum roleEnum;
 
     public SantaUserDto(boolean isUserCreate) {
         this.isUserCreate = isUserCreate;

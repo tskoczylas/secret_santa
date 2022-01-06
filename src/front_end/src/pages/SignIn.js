@@ -2,11 +2,13 @@ import SmallTemplate from "./SmallTemplate";
 import {Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField} from "@mui/material";
 import {textTemplate} from "../data/textTemplate";
 import Typography from "@mui/material/Typography";
+import {Test} from "../test";
 
 export default function SignIn (){
 
     return(
         <SmallTemplate>
+
             <Typography variant="h6" marginTop={2}
             marginBottom={2}>
                 {textTemplate.signin.signin}

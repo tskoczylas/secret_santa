@@ -1,21 +1,15 @@
 package com.tomsproject.secret_santa.service;
 
 import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.SantaUserDto;
 import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
-import org.junit.jupiter.api.Test;
+import com.tomsproject.secret_santa.services.SheduleService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SheduleServiceTest {
