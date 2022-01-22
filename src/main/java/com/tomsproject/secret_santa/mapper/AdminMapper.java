@@ -1,12 +1,8 @@
 package com.tomsproject.secret_santa.mapper;
 
 import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.SantaUserDto;
 import com.tomsproject.secret_santa.model.Admin;
-import com.tomsproject.secret_santa.model.SantaUser;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 
 public class AdminMapper {
 

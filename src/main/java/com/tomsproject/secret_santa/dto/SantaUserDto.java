@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class SantaUserDto {
 
     @Id
@@ -17,26 +18,25 @@ public class SantaUserDto {
     long userid;
     String firstName;
     String lastName;
-    String phoneNumber;
     boolean isUserComplete;
-    boolean isUserCreate;
-    String token;
-    boolean isFirstMessageSendCorrectly;
-    boolean isSecondMessageSendCorrectly;
+    private String startMessageSentId;
+    private String lastMessageSentId;
     String giftDesc;
-    int chosenPrice;
     String email;
+
     @Enumerated(value = EnumType.STRING)
     RoleEnum roleEnum;
 
-    public SantaUserDto(boolean isUserCreate) {
-        this.isUserCreate = isUserCreate;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    GameDto gameDto;
 
-    @ManyToOne(cascade = CascadeType.REFRESH , targetEntity = AdminDto.class,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     AdminDto adminDto;
 
-    @OneToOne(
+
+
+
+    @OneToOne(fetch = FetchType.EAGER,
             orphanRemoval = false)
     SantaUsersPairDto santaUsersPairDto;
 

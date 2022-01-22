@@ -14,7 +14,7 @@ class CreateUserTest {
 
     List<String>  validEmailList= List.of("sample@valid.com","sampple@valid.com");
 
-    CreateUser validUser = new CreateUser(validEmailList, LocalDateTime.now().plusMinutes(45),LocalDateTime.now().plusHours(13),"sample","sample",false);
+    CreateUser validUser = new CreateUser(validEmailList, LocalDateTime.now().plusMinutes(45),LocalDateTime.now().plusHours(13),"game", 2L,"sample",false);
 
 
 
@@ -44,7 +44,7 @@ class CreateUserTest {
     void isValidForCreateShouldReturnFalseWhenAnyFieldIsNull()  {
         //given
         CreateUser createUser1 = new CreateUser();
-        validUser.setAdminName(null);
+        validUser.setAdminId(null);
 
         //when
         //then
@@ -83,7 +83,9 @@ class CreateUserTest {
         //given
         LocalDateTime setDateTime = LocalDateTime.now().plusHours(2);
         //when
+        validUser.setStartNow(false);
         validUser.setStartDate(setDateTime);
+
         //then
         assertTrue( validUser.isStartDateValid());
     }
@@ -91,8 +93,9 @@ class CreateUserTest {
     @Test
     void isStartDateNotValid() {
         //given
-        LocalDateTime setDateTime = LocalDateTime.now();
+        LocalDateTime setDateTime = LocalDateTime.now().minusMinutes(1);
         //when
+        validUser.setStartNow(false);
         validUser.setStartDate(setDateTime);
         //then
         assertFalse( validUser.isStartDateValid());

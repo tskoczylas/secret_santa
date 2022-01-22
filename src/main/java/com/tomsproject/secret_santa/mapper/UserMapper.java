@@ -2,7 +2,8 @@ package com.tomsproject.secret_santa.mapper;
 
 import com.tomsproject.secret_santa.dto.SantaUserDto;
 import com.tomsproject.secret_santa.model.CreateUser;
-import com.tomsproject.secret_santa.model.SantaUser;
+import com.tomsproject.secret_santa.model.GameUser;
+import com.tomsproject.secret_santa.model.TokenUser;
 import org.modelmapper.ModelMapper;
 
 
@@ -11,16 +12,16 @@ public class UserMapper {
 
     static ModelMapper modelMapper;
 
-    public static SantaUser mapToSantaUserFromSantaUserDto(SantaUserDto santaUserDto) {
-        SantaUser santaUser = new SantaUser();
+    public static TokenUser mapToTokenUserFromSantaUserDto(SantaUserDto santaUserDto) {
+        TokenUser tokenUser = new TokenUser();
         modelMapper = new ModelMapper();
-        modelMapper.map(santaUserDto, santaUser);
-        return santaUser;
+        modelMapper.map(santaUserDto, tokenUser);
+        return tokenUser;
     }
-    public static SantaUserDto mapSantaUserDtoFromSantaUSer(SantaUser santaUser) {
+    public static SantaUserDto mapToSantaUserDtoFromTokenUser(TokenUser tokenUser) {
         SantaUserDto santaUserDto = new SantaUserDto();
         modelMapper = new ModelMapper();
-        modelMapper.map(santaUser, santaUserDto);
+        modelMapper.map(tokenUser, santaUserDto);
         return santaUserDto;
     }
 
@@ -36,6 +37,13 @@ public class UserMapper {
         modelMapper = new ModelMapper();
         modelMapper.map(createUser, santaUserDto);
         return santaUserDto;
+    }
+
+    public static GameUser mapToGameUserFromSantaUserDto(SantaUserDto santaUserDto) {
+        GameUser gameUser = new GameUser();
+        modelMapper = new ModelMapper();
+        modelMapper.map(santaUserDto, gameUser);
+        return gameUser;
     }
 
 

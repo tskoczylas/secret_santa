@@ -6,3 +6,4 @@
 /src/front_end/node_modules/
 /src/front_end/package-lock.json
 /.idea
+/src/main/java/com/tomsproject/secret_santa/security/SecretCredentials.java

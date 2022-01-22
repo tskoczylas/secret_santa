@@ -1,6 +1,5 @@
 import SmallTemplate from "../SmallTemplate";
 import {createContext, useContext, useEffect, useState} from "react";
-import {getAdmin, itHasTokenAndUser} from "../../data/DataService";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,21 +7,22 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import santa from "../../jpg/santaAatar.png"
-import santaUserDefault, {defaultAdmin} from "../../data/DefaultData";
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Logout from "../Logout";
-import {AdminContex} from "./AdminAuth";
+import AdminAuth, {AdminContex} from "./AdminAuth";
 import {adminLeftMenu, adminRightMenu} from "../../data/textTemplate";
-import Games from "./Games";
 import Welcome from "./Welcome";
 import NewGame from "./newGame/NewGame";
 import Account from "./Account";
+import {useParams} from "react-router";
+import Lottery from "./games/Lottery";
+import Divider from "@mui/material/Divider";
+import {red} from "@mui/material/colors";
 
 export const ButtonContex = createContext("Welcome")
 
@@ -39,7 +39,17 @@ export  default function Admin(props){
         const [getLogout, setLogout] = useState(false)
 
 
-        const handleOpenNavMenu = (event) => {
+   let  {page } = useParams()
+
+    useEffect(()=>{
+        if(page==="new_game")
+        {setCurrentUserButton(adminLeftMenu[1])
+        forward()
+        }
+
+    },[])
+
+    const handleOpenNavMenu = (event) => {
 
             setAnchorElNav(event.currentTarget);
         };
@@ -57,13 +67,14 @@ export  default function Admin(props){
 
 
         const forward = () =>{
-            if(currentUserButton==null||currentUserButton===adminLeftMenu[2])
-                return <Welcome/>
-            else if(currentUserButton===adminLeftMenu[0])
-                return <Games/>
-            else if(currentUserButton===adminLeftMenu[1]){
-                return <NewGame/>
+         if(currentUserButton==null||currentUserButton===adminLeftMenu[0]){
+                return <NewGame navigate={(value)=>{setCurrentUserButton(value)}} />
             }
+            else if(currentUserButton===adminLeftMenu[2])
+                return  <Lottery button={currentUserButton} expire={true}/>
+            else if(currentUserButton===adminLeftMenu[1])
+                return <Lottery button={currentUserButton} expire={false}/>
+
             else if(currentUserButton===adminRightMenu[0])
                 return <Account/>
             else if(currentUserButton===adminRightMenu[1]){
@@ -77,12 +88,20 @@ export  default function Admin(props){
 
             setCurrentUserButton(event)
 
-
-
-
-
-
         };
+
+
+
+
+
+
+
+    function stringAvatar(name) {
+        return {
+
+            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+        };
+    }
 
         const handleCloseUserMenu = () => {
             setAnchorElUser(null);
@@ -147,7 +166,7 @@ export  default function Admin(props){
                                 <Button
                                     key={page}
                                     onClick={()=>handleCloseNavMenu(page)}
-                                    sx={{ my: 0, color: 'white', display: 'blovk' }}
+                                    sx={{ my: 0, fontWeight:"bold",  color: 'white', display: 'block' }}
                                 >
                                     {page}
                                 </Button>
@@ -157,7 +176,8 @@ export  default function Admin(props){
                         <Box  sx={{ flexGrow: 0 }}>
                             <Tooltip title="Account">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
-                                    <Avatar sx={{height:24,width:26}}  alt="Remy Sharp" src={santa} />
+                                    <Avatar variant="rounded" sx={{height:24,width:24,boxShadow:2}} {...stringAvatar( adminData.data.firstName + " " + adminData.data.secondName)} />
+
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -176,13 +196,12 @@ export  default function Admin(props){
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <Typography>
-                                    {props.data.data.login }
-                                </Typography>
+
+
                                 {adminRightMenu.map((setting) => (
                                     <MenuItem  key={setting} divider
                                               onClick={()=>handleCloseNavMenu(setting)}>
-                                        <Typography textAlign="center">{setting}</Typography>
+                                        <Typography sx={{fontSize:14}}  textAlign="center">{setting}</Typography>
                                     </MenuItem>
 
                                 ))}

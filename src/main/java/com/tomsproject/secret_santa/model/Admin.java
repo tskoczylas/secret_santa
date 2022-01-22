@@ -6,6 +6,9 @@ import lombok.*;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.tomsproject.secret_santa.util.Tools.isValidEmail;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -16,52 +19,21 @@ public class Admin {
     private long adminId;
     private String firstName;
     private String secondName;
-    private String login;
+    private String email;
     private String password;
-    private boolean usersAreCompleted;
+    boolean isActive;
 
-    RoleEnum roleEnum;
+    String emailConformationSentId;
 
-    String email;
-
-
-
-    int firstChosenPrice;
-    int secondChosenPrice;
-    int thirdChosenPrice;
-
-    int percentageCompleteUsers;
-
-    public boolean isCorrectAdmin(){
-        return this.adminId != 0 &&
-                !this.firstName.isEmpty() &&
-                !this.secondName.isEmpty() &&
-                this.usersAreCompleted;
-    }
-
-    public boolean isAdminCreatable(){
-        return this.adminId == 0 &&
-                !this.firstName.isEmpty() &&
-                !this.secondName.isEmpty() &&
-                !this.login.isEmpty()&&
-                !this.password.isEmpty()&&
-                !this.usersAreCompleted &&
-                this.firstChosenPrice!=0&&
-                this.secondChosenPrice!=0&&
-                this.thirdChosenPrice!=0&&
-                this.roleEnum!=null&&
-                Arrays.stream(RoleEnum.values()).
-                        anyMatch(v->v.
-                                name().
-                                equals(this.roleEnum.name()));
-
-
-
-    }
-
-
-
-
+   public boolean isValidAdminEmail(){
+       return isValidEmail(this.email);
+   }
 }
+
+
+
+
+
+
 
 

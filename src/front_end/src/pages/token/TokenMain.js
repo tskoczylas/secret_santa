@@ -20,6 +20,7 @@ export default function TokenMain() {
     fetch("/api/santaToken/" + token)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         setTokenData(data);
       })
 
@@ -30,7 +31,7 @@ export default function TokenMain() {
 
   return (
 
-    <TokenContex.Provider value={getTokenData}>
+    <TokenContex.Provider  value={getTokenData}>
 
     <LookForToken/>
     </TokenContex.Provider>

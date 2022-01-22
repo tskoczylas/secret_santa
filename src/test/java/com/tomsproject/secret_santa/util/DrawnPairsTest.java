@@ -2,7 +2,6 @@ package com.tomsproject.secret_santa.util;
 
 import com.tomsproject.secret_santa.dto.SantaUserDto;
 import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
-import com.tomsproject.secret_santa.model.SantaUser;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import static com.tomsproject.secret_santa.util.DrawnPairs.lotteryShuffle;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.isNull;
 
 class DrawnPairsTest {
 

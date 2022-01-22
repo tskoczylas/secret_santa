@@ -13,6 +13,7 @@ import { Box } from "@mui/system";
 import { useContext, useState } from "react";
 import { TokenContex } from "../pages/token/TokenMain";
 import PriceForm from "./PriceForm";
+import {textTemplate} from "../data/textTemplate";
 
 export default function TextForm(props) {
   const [getButtonState, setButtonState] = useState(true);
@@ -31,14 +32,11 @@ export default function TextForm(props) {
 
     const currentData = {
       userid: userData.userid,
-      phoneNumber: userData.phoneNumber,
-      token: userData.token,
+      email: userData.email,
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       giftDesc: data.get("giftDesc"),
-      admin: userData.admin,
-      userComplete: true,
-      chosenPrice: data.get("gift"),
+      adminId: userData.adminId
     };
 
   
@@ -65,12 +63,12 @@ export default function TextForm(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             disabled
-            value={userData.phoneNumber}
-            label="Numer telefonu"
+            value={userData.email}
+            label={textTemplate.token.founded.label_mail}
             fullWidth
             autoFocus
-            id="phoneNumber"
-            name="phoneNumber"
+            id="email"
+            name="email"
           />
         </Grid>
 
@@ -78,8 +76,8 @@ export default function TextForm(props) {
           <TextField
             disabled
             autoFocus
-            value={userData.token}
-            label="Token"
+            value={userData.userid}
+            label={textTemplate.token.founded.label_token}
             fullWidth
             id="token"
             name="token"
@@ -94,7 +92,7 @@ export default function TextForm(props) {
             defaultValue={userData.firstName}
             fullWidth
             id="firstName"
-            label="Imię"
+            label={textTemplate.token.founded.label_name}
             autoFocus
           />
         </Grid>
@@ -105,7 +103,7 @@ export default function TextForm(props) {
             fullWidth
             id="lastName"
             defaultValue={userData.lastName}
-            label="Nazwisko"
+            label={textTemplate.token.founded.label_lastName}
             name="lastName"
             autoComplete="off"
           />
@@ -120,26 +118,24 @@ export default function TextForm(props) {
             defaultValue={userData.giftDesc}
             maxRows={2}
             error={getGiftDescError}
-              helperText={getGiftDescError===true?"Zbyt długi opis":""}
+              helperText={getGiftDescError===true?textTemplate.token.founded.gift_too_long:""}
             
 
         
             name="giftDesc"
-            label="Krótka sugestja co do prezentu(30 znaków)"
+            label={textTemplate.token.founded.label_git}
             id="giftDesc"
           />
         </Grid>
 
-        <Grid item xs={12} sm={12}>
-          <PriceForm></PriceForm>
-        </Grid>
+
         <Dialog
           open={getBackDropState}
           // onClose={getBackDropState}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Jestes pewien?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{textTemplate.token.founded.dialog_sure}</DialogTitle>
 
           <DialogActions>
             <Button
@@ -147,7 +143,7 @@ export default function TextForm(props) {
                 setButtonSubmmit(true);
                 setBackDropState(false);
 
-                fetch("/api/user/", getApiData)
+                fetch("/api/user/save/", getApiData)
                   .then((response) => response.json())
                   .then((data) => {
                     if (data.userid !== 0) {
@@ -161,7 +157,7 @@ export default function TextForm(props) {
                   });
               }}
             >
-              Tak
+              {textTemplate.token.founded.yes_button}
             </Button>
 
             <Button
@@ -170,14 +166,14 @@ export default function TextForm(props) {
               }}
               autoFocus
             >
-              Nie, chcę wrócić!
+              {textTemplate.token.founded.dialog_back}
             </Button>
           </DialogActions>
         </Dialog>
 
         <Grid item xs={12} sm={12}>
           {userData.userComplete === true ? (
-            <Alert> Twoje dane zostały zapisane</Alert>
+            <Alert>{textTemplate.token.founded.aler_save}</Alert>
           ) : (
             <Button
               disabled={getButtonState}
@@ -188,7 +184,7 @@ export default function TextForm(props) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Zapisz się
+              {textTemplate.token.founded.button_save}
             </Button>
           )}
 

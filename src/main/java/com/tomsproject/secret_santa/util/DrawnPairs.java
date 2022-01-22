@@ -2,7 +2,6 @@ package com.tomsproject.secret_santa.util;
 
 import com.tomsproject.secret_santa.dto.SantaUserDto;
 import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
-import com.tomsproject.secret_santa.model.SantaUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +12,10 @@ import java.util.stream.Collectors;
 public class DrawnPairs {
 
 public static List<SantaUsersPairDto> lotteryShuffle (List<SantaUsersPairDto> santaUsersPairDtoList){
+
     List<SantaUserDto> afterShuffleList = santaUsersPairDtoList.stream().map(SantaUsersPairDto::getSantaUserDtoFirst).collect(Collectors.toList());
+
+
     List<SantaUserDto> beforeShuffle = new ArrayList<>(afterShuffleList);
 
 

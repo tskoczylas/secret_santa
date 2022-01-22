@@ -11,8 +11,15 @@ import java.util.Optional;
 @Repository
 public interface AdminRepo extends JpaRepository<AdminDto,Long> {
 
-    Optional<AdminDto>  findAdminDtoByAdminIdAndItHasBeenDrawnIsFalse(long adminId);
-    Optional<AdminDto> findAdminDtoByLogin(String adminLogin);
+   // Optional<AdminDto>  findAdminDtoByAdminIdAndItHasBeenDrawnIsFalse(long adminId);
+    Optional<AdminDto> findAdminDtoByEmail(String adminLogin);
+
+ Optional<AdminDto> findAdminDtoByActivationToken(String token);
+
+
+
+
+
 
 
 

@@ -40,14 +40,22 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
                if(authorizationHeader!=null&&authorizationHeader.startsWith("Bearer ")) {
                    try {
+                       System.out.println("inside a try authorization " +request.getServletPath());
 
                        String token = authorizationHeader.replace("Bearer ", "");
-                       Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                       Algorithm algorithm = Algorithm.HMAC256(SecretCredentials.TOKEN.getBytes());
                        JWTVerifier verifier = JWT.require(algorithm).build();
                        DecodedJWT decodedJWT = verifier.verify(token);
                        String admin = decodedJWT.getSubject();
+               ////DoIt
+                       //Token.user == equal authorization
+                       System.out.println("authorization servletPath" + request.getServletPath());
                        if(request.getServletPath().equals("/api/getAdmin/" +admin)||
-                       request.getServletPath().equals("/api/user/create")){
+                       request.getServletPath().equals("/api/user/create") ||
+                               request.getServletPath().equals("/api/game/admin_games")||
+                                       request.getServletPath().equals("/api/game/user_games")
+
+                       ){
                        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
                        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                        roles.forEach(role -> {
@@ -56,18 +64,22 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                        UsernamePasswordAuthenticationToken authenticationToken =
                                new UsernamePasswordAuthenticationToken(admin, null, authorities);
                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                           System.out.println("authorization success path:" + request.getServletPath());
                        filterChain.doFilter(request, response);}
                        else throw new Exception();
                    } catch (Exception e) {
                        response.setHeader("error",e.getMessage());
-                       response.sendError(301,"e");
-
+                       response.sendError(301,"Authorization failed ");
+                       System.out.println("authorization error path:" + request.getServletPath());
                    }
                }
-               else filterChain.doFilter(request,response);
+               else {filterChain.doFilter(request,response);
+            System.out.println("authorization faild " + request.getServletPath());}
 
 
 
-       }
+
+        }
     }
 }

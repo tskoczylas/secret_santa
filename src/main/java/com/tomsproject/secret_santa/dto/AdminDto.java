@@ -1,10 +1,15 @@
 package com.tomsproject.secret_santa.dto;
 
 import com.tomsproject.secret_santa.enums.RoleEnum;
-import com.tomsproject.secret_santa.model.SantaUser;
+import com.tomsproject.secret_santa.repo.AdminRepo;
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -12,34 +17,41 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class AdminDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long adminId;
+
+    @NotNull
+    @NotBlank
     String firstName;
+
+    @NotNull
+    @NotBlank
     String secondName;
-    String login;
+
+    @NotNull
+    @NotBlank
+    String email;
+
+    @NotNull
+    @NotBlank
     String password;
-    String webToken;
-    String santaMessage;
-    String smsSource;
+
+    boolean isActive;
+    String activationToken;
+
+    String emailConformationSentId;
 
 
-    int firstChosenPrice;
-    int secondChosenPrice;
-    int thirdChosenPrice;
     @Enumerated(EnumType.ORDINAL)
     RoleEnum roleEnum;
 
-    long medianeUserChosenPrice;
+    @OneToMany(mappedBy = "adminDto")
+    List<GameDto> gameDtoList;
 
-    boolean allUsersAdded;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "adminDto", orphanRemoval = true, fetch = FetchType.EAGER)
-    List<SantaUserDto> userList;
 
-    boolean itHasBeenDrawn;
 
 
 }

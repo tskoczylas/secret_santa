@@ -40,6 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeHttpRequests().antMatchers(HttpMethod.GET,"/api/getAdmin/**").authenticated();
+        http.authorizeHttpRequests().antMatchers(HttpMethod.GET,"/api/admin/**").permitAll();
+        http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/api/game/**").authenticated();
+
         http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/api/user/create/**").authenticated();
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -22,7 +22,7 @@ export default function LookForToken() {
 
 
     return (
-        <SmallTemplate>
+        <SmallTemplate maxWidth="xs">
 
 
             <FoundToken/>

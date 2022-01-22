@@ -14,7 +14,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class SmsServiceImp implements  SmsService {
+    @Override
+    public SmsApi getSmsApi() {
+        return null;
+    }
+
+    @Override
+    public boolean sendLotteryFinalSms(List<SantaUsersPairDto> santaUsersPairDtoSource) {
+        return false;
+    }
+
+    @Override
+    public boolean sendRequestSMS(SantaUserDto santaUserDto) {
+        return false;
+    }
+
+    /*
     @Value("${sms.client.login}")
     String smsClientLogin;
 
@@ -105,5 +122,7 @@ public class SmsServiceImp implements  SmsService {
 
 
     }
+
+     */
 }
 
