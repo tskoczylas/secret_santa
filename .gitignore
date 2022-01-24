@@ -1,9 +1,14 @@
-/src/main/resources/application.properties
 /target/
 /mvnw
 /mvnw.cmd
+/.mvn
+/src/front_end/tsconfig.json
+/src/front_end/build
+/elasticbeanstalk
 /src/front_end/node/
 /src/front_end/node_modules/
 /src/front_end/package-lock.json
 /.idea
 /src/main/java/com/tomsproject/secret_santa/security/SecretCredentials.java
+**/.DS_Store
+/src/main/resources

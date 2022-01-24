@@ -60,14 +60,7 @@ public class UserController {
 
     }
 
-    @PostMapping("/admin/create")
-    public ResponseEntity<HttpStatus> createAdmin(@RequestBody Admin admin){
-        if(!admin.isValidAdminEmail()) return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
-       if(adminService.isAdminEmailExist(admin)) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        else if (adminService.saveAdmin(admin)) return new ResponseEntity<>(HttpStatus.OK);
-        else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-    }
 
     @GetMapping("/getAdmin/{login}")
     public ResponseEntity<Admin> getAdmin(@PathVariable String login){

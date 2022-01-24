@@ -29,14 +29,14 @@ public class AdminService {
 
 
     private GameRepo gameRepo;
-   private PasswordEncoder passwordEncoder;
+ //  private PasswordEncoder passwordEncoder;
    private AdminRepo adminRepo;
    private ASESMail asesMail;
 
-    public AdminService(GameRepo gameRepo, PasswordEncoder passwordEncoder, AdminRepo adminRepo, ASESMail asesMail) {
+    public AdminService(GameRepo gameRepo, AdminRepo adminRepo, ASESMail asesMail) {
 
         this.gameRepo = gameRepo;
-        this.passwordEncoder = passwordEncoder;
+       // this.passwordEncoder = passwordEncoder;
         this.adminRepo = adminRepo;
         this.asesMail = asesMail;
     }
@@ -48,7 +48,7 @@ public class AdminService {
     public boolean saveAdmin(Admin admin) {
 try{
         AdminDto adminDto = mapToAdminDtoFromAdmin(admin);
-        adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+     //   adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
         adminDto.setRoleEnum(RoleEnum.ADMIN);
         getToken(adminDto);
         AdminDto savedAdmin = adminRepo.save(adminDto);

@@ -1,5 +1,5 @@
 import "./App.css";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
 import LogIn from "./pages/LogIn";
 import SignIn from "./pages/SignIn/SignIn";
 import TokenMain from "./pages/token/TokenMain";
@@ -13,7 +13,7 @@ function App() {
   return(
 
 
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
           <Route path="/" element={<MainPage/>}/>
           <Route path="/admin/:page" element={tokenAndUserAvailable ?<LogIn/> : <AdminAuth/>}/>
@@ -25,7 +25,7 @@ function App() {
           <Route path="/token/" element={<TokenMain />} />
           <Route path="/token/:token" element={<TokenMain />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
 
   );
 }

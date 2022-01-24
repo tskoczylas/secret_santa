@@ -35,6 +35,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         if(request.getServletPath().equals("/api/login")){
            filterChain.doFilter(request,response);
        }
+
+
        else {
            String authorizationHeader = request.getHeader(AUTHORIZATION);
 

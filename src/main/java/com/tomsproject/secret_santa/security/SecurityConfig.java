@@ -1,5 +1,6 @@
 package com.tomsproject.secret_santa.security;
 
+//import com.tomsproject.secret_santa.controller.ConfigController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.Filter;
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -20,12 +23,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
 
+
     public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
-
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -34,18 +36,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
         authenticationFilter.setFilterProcessesUrl("/api/login");
 
-        http.csrf().disable();
+
+          http.cors();
+        http.csrf().disable().authorizeHttpRequests();
+        http.authorizeHttpRequests().antMatchers(
+                HttpMethod.GET,
+                "/index*", "/static/**", "/*.js", "/*.json", "/*.ico")
+                .permitAll();
+
+
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.authorizeHttpRequests().antMatchers(HttpMethod.GET,"/api/getAdmin/**").authenticated();
         http.authorizeHttpRequests().antMatchers(HttpMethod.GET,"/api/admin/**").permitAll();
         http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/api/game/**").authenticated();
-
+//
         http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/api/user/create/**").authenticated();
         http.addFilter(authenticationFilter);
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+       // http.addFilter(new ConfigController());
+
     }
 
 

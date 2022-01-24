@@ -1,6 +1,6 @@
 services:
    backend:
-     image: skiniu/santa6000
+     image: skiniu/secret_santa_mail:latest
      ports:
        - "80:9000"
      restart: "always"

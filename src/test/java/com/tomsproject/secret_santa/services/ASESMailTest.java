@@ -3,6 +3,7 @@ package com.tomsproject.secret_santa.services;
 import com.tomsproject.secret_santa.dto.AdminDto;
 import com.tomsproject.secret_santa.dto.GameDto;
 import com.tomsproject.secret_santa.dto.SantaUserDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -30,6 +31,7 @@ class ASESMailTest {
 
 
     @Test
+    @Disabled
     void sendLink()  {
         santaUserDto.setUserid(1);
         santaUserDto.setEmail("t.skoczylas1@gmail.com");
@@ -38,6 +40,6 @@ class ASESMailTest {
         adminDto.setFirstName("FirstNameTest");
         adminDto.setSecondName("LastNameTest");
         ASESMail asesMail = new ASESMail();
-        asesMail.sendLink(gameDto);
+        //asesMail.sendLink(gameDto);
     }
 }
