@@ -11,7 +11,7 @@ https://justsecretsanta.com
  
  ## App's features: 
 
--Login/Signin with transactional confirmation email for the game creator - admin
+- Login/Sign in with transactional confirmation email for the game creator - admin
 - New game - creating a list of participants  emails:
   * Admin can set a start and last response date, short messages to users taking part in the game. :hourglass:
   * The system will automatically send emails with links containing  questioners to each person, asking for a short description of the present. :gift:
