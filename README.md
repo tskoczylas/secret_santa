@@ -21,7 +21,7 @@ https://justsecretsanta.com
  ## Code is written:
  1. Back end - Java:
     - SpringBoot: 
-      - Spring Data JSP:  [Dtos Classes](/src/main/java/com/tomsproject/secret_santa/dto), 
+      - Spring Data JSP:  [Dtos Classes](/src/main/java/com/tomsproject/secret_santa/entity), 
                          [Repo Classes](/src/main/java/com/tomsproject/secret_santa/repo), MySql DB                     
       - SpringBoot Rest, [Controller Classes](/src/main/java/com/tomsproject/secret_santa/controller),
       - Spring Security : JWS Token Authentication Loterry [Seciuirty Services Classes](/src/main/java/com/tomsproject/secret_santa/security/ )

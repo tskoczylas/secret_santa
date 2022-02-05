@@ -39,7 +39,6 @@ public class UserController {
     @PostMapping("/user/create")
     public @ResponseBody
     HttpStatus adminCreateUser(@RequestBody CreateUser createUser) {
-        System.out.println(createUser);
        if (!createUser.isValidForCreate()) return HttpStatus.NOT_ACCEPTABLE;
        else if(!santaUserService.isCorrectAdmin(createUser.getAdminId())) return HttpStatus.NOT_FOUND;
        else if(adminService.isOverActiveGameLimit(createUser.getAdminId())) return HttpStatus.TOO_MANY_REQUESTS;

@@ -2,19 +2,14 @@ package com.tomsproject.secret_santa.services;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.resource.Emailv31;
 import com.mailjet.client.transactional.SendContact;
 import com.mailjet.client.transactional.SendEmailsRequest;
 import com.mailjet.client.transactional.TransactionalEmail;
 import com.mailjet.client.transactional.response.SendEmailsResponse;
-import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.GameDto;
-import com.tomsproject.secret_santa.dto.SantaUserDto;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.GameEntity;
+import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +27,7 @@ public class MailService {
     @Value("${mail.secret.key}")
     String secretKey;
 
-    void sendLink(List<SantaUserDto> userDtoList, GameDto gameDto, AdminDto adminDto) throws  MailjetException {
+    void sendLink(List<SantaUserEntity> userDtoList, GameEntity gameDto, AdminEntity adminDto) throws  MailjetException {
 
 
 
@@ -43,7 +38,7 @@ public class MailService {
 
         MailjetClient client = new MailjetClient(options);
 
-        for (SantaUserDto users : userDtoList) {
+        for (SantaUserEntity users : userDtoList) {
             TransactionalEmail message1 = TransactionalEmail
                     .builder()
                     .templateLanguage(true)

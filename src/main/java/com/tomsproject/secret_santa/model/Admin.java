@@ -1,11 +1,8 @@
 package com.tomsproject.secret_santa.model;
 
 
-import com.tomsproject.secret_santa.enums.RoleEnum;
 import lombok.*;
 
-import java.util.Arrays;
-import java.util.List;
 
 import static com.tomsproject.secret_santa.util.Tools.isValidEmail;
 
@@ -21,9 +18,8 @@ public class Admin {
     private String secondName;
     private String email;
     private String password;
-    boolean isActive;
-
-    String emailConformationSentId;
+    private boolean isActive;
+    private String emailConformationSentId;
 
    public boolean isValidAdminEmail(){
        return isValidEmail(this.email);

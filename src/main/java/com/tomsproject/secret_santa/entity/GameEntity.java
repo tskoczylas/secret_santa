@@ -1,4 +1,4 @@
-package com.tomsproject.secret_santa.dto;
+package com.tomsproject.secret_santa.entity;
 
 import lombok.*;
 
@@ -10,10 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class GameDto {
+public class GameEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //toDo - token creation
+    //toDo - token creation - create unique token instead of standard serialize
     private long gameId;
     private String gameName;
     private LocalDateTime startDate;
@@ -22,19 +22,12 @@ public class GameDto {
     private boolean isStartNow;
     private boolean isFirstMessageSent;
     private boolean isSecondMessageSent;
-
-
-
-
-
     private boolean gameCompleted;
 
-    @ManyToOne(cascade = CascadeType.REFRESH , targetEntity = AdminDto.class,fetch = FetchType.LAZY)
-    AdminDto adminDto;
-
-
+    @ManyToOne(cascade = CascadeType.REFRESH , targetEntity = AdminEntity.class,fetch = FetchType.LAZY)
+    private AdminEntity adminDto;
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "gameDto", fetch = FetchType.LAZY)
-     List<SantaUserDto> userList;
+    private List<SantaUserEntity> userList;
 
 }

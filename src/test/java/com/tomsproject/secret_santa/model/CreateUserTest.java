@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.tomsproject.secret_santa.model.CreateUser.lastResponseTimeout;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class CreateUserTest {
@@ -104,7 +105,7 @@ class CreateUserTest {
     @Test
     void isLastResponseDateValid() {
         //given
-        LocalDateTime setDateTime = LocalDateTime.now().plusHours(validUser.getLastResponseTimeout()+1);
+        LocalDateTime setDateTime = LocalDateTime.now().plusHours(lastResponseTimeout+1);
         //when
         validUser.setLastResponseDate(setDateTime);
         //then
@@ -114,7 +115,7 @@ class CreateUserTest {
     @Test
     void isLastResponseDateNotValid() {
         //given
-        LocalDateTime setDateTime = LocalDateTime.now().plusHours(validUser.getLastResponseTimeout());
+        LocalDateTime setDateTime = LocalDateTime.now().plusHours(lastResponseTimeout);
         //when
         validUser.setLastResponseDate(setDateTime);
         //then

@@ -1,40 +1,32 @@
 package com.tomsproject.secret_santa.services;
 
-import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.GameDto;
-import com.tomsproject.secret_santa.dto.SantaUserDto;
+import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.GameEntity;
+import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource(locations = "/application.properties")
 
 class ASESMailTest {
-     SantaUserDto santaUserDto = new SantaUserDto();
+     SantaUserEntity santaUserEntity = new SantaUserEntity();
 
-    List<SantaUserDto> userDtoList =List.of(santaUserDto);
-    GameDto gameDto = new GameDto();
-    AdminDto adminDto = new AdminDto();
+    List<SantaUserEntity> userDtoList =List.of(santaUserEntity);
+    GameEntity gameDto = new GameEntity();
+    AdminEntity adminDto = new AdminEntity();
 
 
     @Test
     @Disabled
     void sendLink()  {
-        santaUserDto.setUserid(1);
-        santaUserDto.setEmail("t.skoczylas1@gmail.com");
+        santaUserEntity.setUserid(1);
+        santaUserEntity.setEmail("t.skoczylas1@gmail.com");
         gameDto.setLastResponseDate(LocalDateTime.now());
         gameDto.setUserText("Welcome test");
         adminDto.setFirstName("FirstNameTest");

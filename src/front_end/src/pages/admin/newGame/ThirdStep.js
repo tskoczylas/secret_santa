@@ -66,7 +66,6 @@ export default function ThirdStep(){
                         fullWidth
                         multiline
 
-                        id="outlined-uncontrolled"
 
                         rows={4}>
 
@@ -94,7 +93,6 @@ export default function ThirdStep(){
                         fullWidth
 
 
-                        id="outlined-uncontrolled"
 
                         rows={1}>
 

@@ -1,10 +1,10 @@
 package com.tomsproject.secret_santa.service;
 
-import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
+import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.SantaUsersPairEntity;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
-import com.tomsproject.secret_santa.services.SheduleService;
+import com.tomsproject.secret_santa.services.ScheduleService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -18,13 +18,13 @@ class SheduleServiceTest {
     @Mock
     SantaUserPairRepo santaUserPairRepo;
     @InjectMocks
-    SheduleService sheduleService;
+    ScheduleService scheduleService;
 
     @Captor
-    ArgumentCaptor<AdminDto> adminDtoArgumentCaptor;
+    ArgumentCaptor<AdminEntity> adminDtoArgumentCaptor;
 
     @Captor
-    ArgumentCaptor<SantaUsersPairDto> santaUsersPairDtoArgumentCaptor;
+    ArgumentCaptor<SantaUsersPairEntity> santaUsersPairDtoArgumentCaptor;
     /**
     @Test
     public void findCompletedUsersAdminAndRunLottery() {

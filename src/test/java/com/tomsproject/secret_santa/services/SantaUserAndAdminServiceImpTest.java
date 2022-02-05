@@ -1,7 +1,7 @@
 package com.tomsproject.secret_santa.services;
 
-import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.SantaUserDto;
+import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import com.tomsproject.secret_santa.model.TokenUser;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.GameRepo;
@@ -28,9 +28,7 @@ private SantaUserRepo santaUserRepo;
 @Mock
     private SantaUserPairRepo santaUserPairRepo;
 @Mock
-    private SmsService smsService;
-@Mock
-    private SheduleService sheduleService;
+    private ScheduleService scheduleService;
 @Mock
     private PasswordEncoder passwordEncoder;
 @Mock
@@ -46,8 +44,8 @@ SantaUserAndAdminServiceImp santaUserAndAdminServiceImp;
     void findUserByTokenIdAndCreateProtUserCompleted() {
         //given
         String token = "1234";
-        SantaUserDto santaUserDto = new SantaUserDto();
-        AdminDto adminDto = new AdminDto();
+        SantaUserEntity santaUserEntity = new SantaUserEntity();
+        AdminEntity adminDto = new AdminEntity();
         adminDto.setAdminId(1);
       //  santaUserDto.setToken(token);
 

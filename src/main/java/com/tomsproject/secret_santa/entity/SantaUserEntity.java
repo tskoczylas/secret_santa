@@ -1,4 +1,4 @@
-package com.tomsproject.secret_santa.dto;
+package com.tomsproject.secret_santa.entity;
 
 import com.tomsproject.secret_santa.enums.RoleEnum;
 import lombok.*;
@@ -11,34 +11,31 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class SantaUserDto {
+public class SantaUserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long userid;
-    String firstName;
-    String lastName;
+    private   long userid;
+    private String firstName;
+    private String lastName;
     boolean isUserComplete;
     private String startMessageSentId;
     private String lastMessageSentId;
-    String giftDesc;
-    String email;
+    private String giftDesc;
+    private String email;
 
     @Enumerated(value = EnumType.STRING)
-    RoleEnum roleEnum;
+    private RoleEnum roleEnum;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    GameDto gameDto;
+    private GameEntity gameDto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    AdminDto adminDto;
+    private AdminEntity adminDto;
 
 
-
-
-    @OneToOne(fetch = FetchType.EAGER,
-            orphanRemoval = false)
-    SantaUsersPairDto santaUsersPairDto;
+    @OneToOne(fetch = FetchType.EAGER)
+    private  SantaUsersPairEntity santaUsersPairDto;
 
 
 }

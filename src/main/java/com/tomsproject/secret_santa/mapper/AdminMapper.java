@@ -1,24 +1,27 @@
 package com.tomsproject.secret_santa.mapper;
 
-import com.tomsproject.secret_santa.dto.AdminDto;
+import com.tomsproject.secret_santa.entity.AdminEntity;
 import com.tomsproject.secret_santa.model.Admin;
 import org.modelmapper.ModelMapper;
 
 public class AdminMapper {
 
-    static ModelMapper modelMapper = new ModelMapper();
+    private  AdminMapper() {
+    }
 
-    public static Admin mapToAdminFromAdminDto(AdminDto adminDto) {
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public static Admin mapToAdminFromAdminDto(AdminEntity adminDto) {
         Admin admin = new Admin();
         modelMapper = new ModelMapper();
         modelMapper.map(adminDto, admin);
         return admin;
     }
-    public static AdminDto mapToAdminDtoFromAdmin(Admin admin) {
-        AdminDto adminDto = new AdminDto();
+    public static AdminEntity mapToAdminDtoFromAdmin(Admin admin) {
+        AdminEntity adminEntity = new AdminEntity();
         modelMapper = new ModelMapper();
-        modelMapper.map(admin, adminDto);
-        return adminDto;
+        modelMapper.map(admin, adminEntity);
+        return adminEntity;
     }
 
 

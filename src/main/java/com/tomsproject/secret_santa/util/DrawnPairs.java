@@ -1,8 +1,10 @@
 package com.tomsproject.secret_santa.util;
 
-import com.tomsproject.secret_santa.dto.SantaUserDto;
-import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
+import com.tomsproject.secret_santa.entity.SantaUserEntity;
+import com.tomsproject.secret_santa.entity.SantaUsersPairEntity;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,12 +13,15 @@ import java.util.stream.Collectors;
 
 public class DrawnPairs {
 
-public static List<SantaUsersPairDto> lotteryShuffle (List<SantaUsersPairDto> santaUsersPairDtoList){
+    private DrawnPairs() {
+    }
 
-    List<SantaUserDto> afterShuffleList = santaUsersPairDtoList.stream().map(SantaUsersPairDto::getSantaUserDtoFirst).collect(Collectors.toList());
+    public static List<SantaUsersPairEntity> lotteryShuffle (List<SantaUsersPairEntity> santaUsersPairDtoList) throws NoSuchAlgorithmException {
+
+    List<SantaUserEntity> afterShuffleList = santaUsersPairDtoList.stream().map(SantaUsersPairEntity::getSantaUserEntityFirst).collect(Collectors.toList());
 
 
-    List<SantaUserDto> beforeShuffle = new ArrayList<>(afterShuffleList);
+    List<SantaUserEntity> beforeShuffle = new ArrayList<>(afterShuffleList);
 
 
 
@@ -27,7 +32,7 @@ public static List<SantaUsersPairDto> lotteryShuffle (List<SantaUsersPairDto> sa
 
     while (!afterShuffleList.isEmpty()){
         if(beforeShuffle.get(i).getUserid()!=afterShuffleList.get(j).getUserid()){
-            santaUsersPairDtoList.get(i).setSantaUserDtoSecond(afterShuffleList.get(j));
+            santaUsersPairDtoList.get(i).setSantaUserEntitySecond(afterShuffleList.get(j));
             afterShuffleList.remove(afterShuffleList.get(j));
             i++;
             j=0;
@@ -39,13 +44,13 @@ public static List<SantaUsersPairDto> lotteryShuffle (List<SantaUsersPairDto> sa
         }
         else  {
 
-            Random random = new Random();
+            Random random = SecureRandom.getInstanceStrong();
            int randomUser = random.nextInt(i-1);
-            SantaUserDto santaUserToReplaceDto = santaUsersPairDtoList.get(randomUser).getSantaUserDtoSecond();
+            SantaUserEntity santaUserToReplaceDto = santaUsersPairDtoList.get(randomUser).getSantaUserEntitySecond();
 
             if(santaUserToReplaceDto.getUserid()!=beforeShuffle.get(j).getUserid()){
-                santaUsersPairDtoList.get(i).setSantaUserDtoSecond(santaUserToReplaceDto);
-                santaUsersPairDtoList.get(i).setSantaUserDtoFirst(afterShuffleList.get(j));
+                santaUsersPairDtoList.get(i).setSantaUserEntitySecond(santaUserToReplaceDto);
+                santaUsersPairDtoList.get(i).setSantaUserEntityFirst(afterShuffleList.get(j));
                 afterShuffleList.remove(afterShuffleList.get(j));
             }
 

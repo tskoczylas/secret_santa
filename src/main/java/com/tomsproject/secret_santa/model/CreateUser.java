@@ -4,12 +4,8 @@ package com.tomsproject.secret_santa.model;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 
 @Setter
@@ -27,7 +23,8 @@ public class CreateUser {
    private Long adminId;
    private String userText;
    private boolean isStartNow;
-    final private   long lastResponseTimeout = 12;
+
+    static final long lastResponseTimeout = 12;
 
 
     private boolean allFieldsNotNull() {

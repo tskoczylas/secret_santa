@@ -1,11 +1,12 @@
 package com.tomsproject.secret_santa.util;
 
-import com.tomsproject.secret_santa.dto.SantaUserDto;
-import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
+import com.tomsproject.secret_santa.entity.SantaUserEntity;
+import com.tomsproject.secret_santa.entity.SantaUsersPairEntity;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,9 +22,9 @@ class DrawnPairsTest {
     @Test
     @Disabled
     @RepeatedTest(1000)
-    void ShouldReturnListOfUserWithShuffleAddedUser() {
+    void ShouldReturnListOfUserWithShuffleAddedUser() throws NoSuchAlgorithmException {
         //given
-        List<SantaUsersPairDto> santaUsersPairDtos = new ArrayList<>();
+        List<SantaUsersPairEntity> santaUsersPairDtos = new ArrayList<>();
 
         Random random = new Random();
         final int randomInt = random.nextInt(10000);
@@ -31,19 +32,19 @@ class DrawnPairsTest {
 
 
         for (int i = randomInt; i <nextRandomInt ; i++) {
-           SantaUsersPairDto santaUsersPairDto = new SantaUsersPairDto();
+           SantaUsersPairEntity santaUsersPairDto = new SantaUsersPairEntity();
            santaUsersPairDto.setId(i);
-           SantaUserDto santaUserDto = new SantaUserDto();
-           santaUserDto.setUserid(i);
-           santaUsersPairDto.setSantaUserDtoFirst(santaUserDto);
+           SantaUserEntity santaUserEntity = new SantaUserEntity();
+           santaUserEntity.setUserid(i);
+           santaUsersPairDto.setSantaUserEntityFirst(santaUserEntity);
 
             santaUsersPairDtos.add(santaUsersPairDto);
 
         }
 
         //when
-        List<SantaUserDto> listBeforeShuffleAfterLoopDto = (santaUsersPairDtos).stream().map(SantaUsersPairDto::getSantaUserDtoFirst).collect(Collectors.toList());
-        List<SantaUserDto> listAfterShuffleDto = lotteryShuffle(santaUsersPairDtos).stream().map(SantaUsersPairDto::getSantaUserDtoSecond).collect(Collectors.toList());
+        List<SantaUserEntity> listBeforeShuffleAfterLoopDto = (santaUsersPairDtos).stream().map(SantaUsersPairEntity::getSantaUserEntityFirst).collect(Collectors.toList());
+        List<SantaUserEntity> listAfterShuffleDto = lotteryShuffle(santaUsersPairDtos).stream().map(SantaUsersPairEntity::getSantaUserEntitySecond).collect(Collectors.toList());
         //then
         assertThat(listAfterShuffleDto,hasSize(listBeforeShuffleAfterLoopDto.size()));
 

@@ -10,15 +10,15 @@ import lombok.*;
 @ToString
 public class TokenUser {
 
-    long userid;
-    String firstName;
-    String lastName;
-    String email;
-    boolean isUserComplete;
-    boolean isUserCreate;
-    String percentageCompleteUsers;
-    long adminId;
-    String giftDesc;
+    private  long userid;
+    private  String firstName;
+    private  String lastName;
+    private  String email;
+    private  boolean isUserComplete;
+    private  boolean isUserCreate;
+    private  String percentageCompleteUsers;
+    private  long adminId;
+    private  String giftDesc;
 
 
 
@@ -27,6 +27,8 @@ public class TokenUser {
         this.userid = userid;
         this.isUserCreate = isUserCreate;
     }
+
+
 
     public boolean isValidForSave(){
 

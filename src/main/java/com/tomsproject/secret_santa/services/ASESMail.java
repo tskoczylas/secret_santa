@@ -6,11 +6,10 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simpleemail.model.*;
 
-import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.GameDto;
-import com.tomsproject.secret_santa.dto.SantaUserDto;
+import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.GameEntity;
+import com.tomsproject.secret_santa.entity.SantaUserEntity;
 
-import com.tomsproject.secret_santa.model.Admin;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +23,18 @@ import java.util.List;
 public class ASESMail {
 
     @Value("${aws.accessKeyId}")
-    String accessKeyId;
+   private String accessKeyId;
 
     @Value("${host.name}")
-    String hostName;
+    private String hostName;
 
     @Value("${aws.secretKey}")
-    String secretKey;
+    private  String secretKey;
+
     BasicAWSCredentials basicAWSCredentials;
+    @Value("${mail.from}")
+    private  String mailFrom;
+
 
     @PostConstruct
      void initializeCredentials() {
@@ -41,24 +44,23 @@ public class ASESMail {
     }
 
 
-    GameDto sendLink(GameDto gameDto) {
+    GameEntity sendLink(GameEntity gameDto) {
 
-        for (SantaUserDto user : gameDto.getUserList()) {
-            final String FROM = "mail@justsecretsanta.com";
+        for (SantaUserEntity user : gameDto.getUserList()) {
             final String TO = user.getEmail();
-            final String tmepleteId = "santa_user";
+            final String templateId = "santa_user";
 
 
             SendTemplatedEmailRequest template = new SendTemplatedEmailRequest();
             template.setDestination(new Destination().withToAddresses(TO));
-            template.setTemplate(tmepleteId);
-            template.setSource(FROM);
+            template.setTemplate(templateId);
+            template.setSource(mailFrom);
 
             template.setTemplateData("{\"name\":\"" + gameDto.getAdminDto().getFirstName() + "\"," +
                     "\"lastName\":\"" + gameDto.getAdminDto().getSecondName() + "\"," +
                     "\"message\":\"" + gameDto.getUserText() + "\"," +
                     "\"link\":\""+hostName + "/token/" + user.getUserid() + "\"," +
-                    "\"date\":\"" + gameDto.getLastResponseDate().format(DateTimeFormatter.ISO_DATE_TIME).toString() + "\"}"
+                    "\"date\":\"" + gameDto.getLastResponseDate().format(DateTimeFormatter.ISO_DATE_TIME) + "\"}"
             );
             SendTemplatedEmailResult sendTemplatedEmailResult = getSendTemplatedEmailResult(template);
 
@@ -69,24 +71,23 @@ public class ASESMail {
 
     }
 
-    List<SantaUserDto> sendLotteryResult(List<SantaUserDto> santaUserDto ) {
+    List<SantaUserEntity> sendLotteryResult(List<SantaUserEntity> santaUserEntity) {
 
-        for (SantaUserDto user : santaUserDto) {
+        for (SantaUserEntity user : santaUserEntity) {
 
-            final String FROM = "mail@justsecretsanta.com";
             final String TO = user.getEmail();
-            final String tmepleteId = "santa_user_lottery";
+            final String templateId = "santa_user_lottery";
 
          SendTemplatedEmailRequest template = new SendTemplatedEmailRequest();
             template.setDestination(new Destination().withToAddresses(TO));
-            template.setTemplate(tmepleteId);
-            template.setSource(FROM);
+            template.setTemplate(templateId);
+            template.setSource(mailFrom);
 
 
 
-            template.setTemplateData("{\"name\":\"" + user.getSantaUsersPairDto().getSantaUserDtoSecond().getFirstName() + "\"," +
-                    "\"lastName\":\"" + user.getSantaUsersPairDto().getSantaUserDtoSecond().getLastName() + "\"," +
-                    "\"message\":\"" + user.getSantaUsersPairDto().getSantaUserDtoSecond().getGiftDesc() + "\"}" );
+            template.setTemplateData("{\"name\":\"" + user.getSantaUsersPairDto().getSantaUserEntitySecond().getFirstName() + "\"," +
+                    "\"lastName\":\"" + user.getSantaUsersPairDto().getSantaUserEntitySecond().getLastName() + "\"," +
+                    "\"message\":\"" + user.getSantaUsersPairDto().getSantaUserEntitySecond().getGiftDesc() + "\"}" );
 
 
 
@@ -94,21 +95,21 @@ public class ASESMail {
           user.setLastMessageSentId(sendTemplatedEmailResult.getMessageId());
 
         }
-        return santaUserDto;
+        return santaUserEntity;
 
     }
 
-    public String  sendAccountCreateConfEmail(AdminDto admin ) {
+    public String  sendAccountCreateConfEmail(AdminEntity admin ) {
 
 
 
             final String FROM = "mail@justsecretsanta.com";
             final String TO = admin.getEmail();
-            final String tmepleteId = "santa_user_creation";
+            final String templateId = "santa_user_creation";
 
             SendTemplatedEmailRequest template = new SendTemplatedEmailRequest();
             template.setDestination(new Destination().withToAddresses(TO));
-            template.setTemplate(tmepleteId);
+            template.setTemplate(templateId);
             template.setSource(FROM);
 
 

@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class GameRequest {
 
-    String id;
-    boolean isComplete ;
+    private String id;
+    private boolean isComplete ;
 
 }

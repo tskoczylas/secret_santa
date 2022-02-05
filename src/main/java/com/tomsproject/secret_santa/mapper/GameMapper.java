@@ -1,30 +1,28 @@
 package com.tomsproject.secret_santa.mapper;
 
-import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.GameDto;
-import com.tomsproject.secret_santa.model.Admin;
+import com.tomsproject.secret_santa.entity.GameEntity;
 import com.tomsproject.secret_santa.model.CreateUser;
 import com.tomsproject.secret_santa.model.Game;
-import com.tomsproject.secret_santa.model.GameUser;
 import org.modelmapper.ModelMapper;
 
 public class GameMapper {
 
-    //toDo tests
+    private  GameMapper() {
+    }
 
-    static ModelMapper modelMapper = new ModelMapper();
+    private static ModelMapper modelMapper = new ModelMapper();
 
-    public static GameDto mapToGameDtoFromCreateUser(CreateUser createUser) {
-        GameDto gameDto = new GameDto();
+    public static GameEntity mapToGameDtoFromCreateUser(CreateUser createUser) {
+        GameEntity gameDto = new GameEntity();
         modelMapper = new ModelMapper();
         modelMapper.map(createUser, gameDto);
         return gameDto;
     }
 
-    public static Game mapToGameFromGameDto(GameDto gameDto) {
+    public static Game mapToGameFromGameDto(GameEntity gameEntity) {
         Game game = new Game();
         modelMapper = new ModelMapper();
-        modelMapper.map(gameDto, game);
+        modelMapper.map(gameEntity, game);
         return game;
     }
 

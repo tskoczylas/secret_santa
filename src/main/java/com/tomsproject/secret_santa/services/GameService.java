@@ -1,9 +1,8 @@
 package com.tomsproject.secret_santa.services;
 
-import com.tomsproject.secret_santa.dto.AdminDto;
-import com.tomsproject.secret_santa.dto.GameDto;
-import com.tomsproject.secret_santa.dto.SantaUserDto;
-import com.tomsproject.secret_santa.dto.SantaUsersPairDto;
+import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.GameEntity;
+import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import com.tomsproject.secret_santa.enums.RoleEnum;
 import com.tomsproject.secret_santa.mapper.GameMapper;
 import com.tomsproject.secret_santa.mapper.UserMapper;
@@ -22,30 +21,27 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.tomsproject.secret_santa.mapper.GameMapper.mapToGameDtoFromCreateUser;
-import static com.tomsproject.secret_santa.mapper.GameMapper.mapToGameFromGameDto;
-import static com.tomsproject.secret_santa.util.DrawnPairs.lotteryShuffle;
 
 @Service
 @Log4j2
 public class GameService {
 
-    private SantaUserRepo santaUserRepo;
-    private AdminRepo adminRepo;
-    private SantaUserPairRepo santaUserPairRepo;
-    private SheduleService sheduleService;
-    private GameRepo gameRepo;
-    private ASESMail asesMail;
-    private SantaUserAndAdminService santaUserAndAdminService;
+    final SantaUserRepo santaUserRepo;
+    final AdminRepo adminRepo;
+    final SantaUserPairRepo santaUserPairRepo;
+    final ScheduleService scheduleService;
+    final GameRepo gameRepo;
+    final ASESMail asesMail;
+    final SantaUserAndAdminService santaUserAndAdminService;
 
-    public GameService(SantaUserRepo santaUserRepo, AdminRepo adminRepo, SantaUserPairRepo santaUserPairRepo, SheduleService sheduleService, GameRepo gameRepo, ASESMail asesMail, SantaUserAndAdminService santaUserAndAdminService) {
+    public GameService(SantaUserRepo santaUserRepo, AdminRepo adminRepo, SantaUserPairRepo santaUserPairRepo, ScheduleService scheduleService, GameRepo gameRepo, ASESMail asesMail, SantaUserAndAdminService santaUserAndAdminService) {
         this.santaUserRepo = santaUserRepo;
         this.adminRepo = adminRepo;
         this.santaUserPairRepo = santaUserPairRepo;
-        this.sheduleService = sheduleService;
+        this.scheduleService = scheduleService;
         this.gameRepo = gameRepo;
         this.asesMail = asesMail;
         this.santaUserAndAdminService = santaUserAndAdminService;
@@ -53,8 +49,8 @@ public class GameService {
 
     public boolean createGame(CreateUser createUser) {
 
-        AdminDto adminDto = adminRepo.getById(createUser.getAdminId());
-        GameDto gameDto = mapToGameDtoFromCreateUser(createUser);
+        AdminEntity adminDto = adminRepo.getById(createUser.getAdminId());
+        GameEntity gameDto = mapToGameDtoFromCreateUser(createUser);
         gameDto.setGameCompleted(false);
 
         gameDto.setAdminDto(adminDto);
@@ -63,8 +59,8 @@ public class GameService {
 
         try {
             if(gameDto.isStartNow()){gameDto.setStartDate(LocalDateTime.now());}
-            GameDto savedGame = gameRepo.save(gameDto);
-            List<SantaUserDto> createdUserList = santaUserRepo.saveAll(createUsersList(createUser, adminDto,savedGame));
+            GameEntity savedGame = gameRepo.save(gameDto);
+            List<SantaUserEntity> createdUserList = santaUserRepo.saveAll(createUsersList(createUser, adminDto,savedGame));
             savedGame.setAdminDto(adminDto);
             savedGame.setUserList(createdUserList);
 
@@ -110,7 +106,7 @@ public class GameService {
                          ,HttpStatus.OK))).
 
 
-                         orElseGet(()->badRequest);}
+                         orElse(badRequest);}
     catch (Exception e){
          log.error("Exceptions in getLottery: " +  e.getMessage());
          return badRequest;
@@ -121,7 +117,6 @@ public class GameService {
         ResponseEntity<List<GameUser>> badRequest =new ResponseEntity<>(Collections.emptyList(),HttpStatus.BAD_REQUEST);
 
         try{
-            System.out.println(gameRepo.findGamesUserByGameIdAndComplete(Long.valueOf(gameId),isCompleted).get().size());
 
             return gameRepo.findGamesUserByGameIdAndComplete(Long.valueOf(gameId),isCompleted).
                     map((gameDto -> new ResponseEntity<>
@@ -129,7 +124,7 @@ public class GameService {
                                     stream().
                                     map(UserMapper::mapToGameUserFromSantaUserDto)).
                                     collect(Collectors.toList()),HttpStatus.OK))).
-                    orElseGet(()->badRequest);}
+                    orElse(badRequest);}
         catch (Exception e){
             log.error("Exceptions in getLottery: " +  e.getMessage());
             return badRequest;
@@ -141,13 +136,13 @@ public class GameService {
 
 
 
-    private List<SantaUserDto> createUsersList(CreateUser createUser,AdminDto adminDto, GameDto savedGame) {
-        List<SantaUserDto> santaUserDtoList=
+    private List<SantaUserEntity> createUsersList(CreateUser createUser, AdminEntity adminDto, GameEntity savedGame) {
+        return
                 createUser.
                         getEmailList().
                         stream().
-                        map((email)->
-                        { SantaUserDto userDto = new SantaUserDto();
+                        map( email->
+                        { SantaUserEntity userDto = new SantaUserEntity();
                             userDto.setAdminDto(adminDto);
                             userDto.setEmail(email);
                             userDto.setGameDto(savedGame);
@@ -156,45 +151,9 @@ public class GameService {
                             return userDto; }
                             ).
                         collect(Collectors.toList());
-        return santaUserDtoList;
-    }
-
-    private List<SantaUsersPairDto> santaUsersLottery(List<SantaUserDto> createdUserDtoList){
-        return lotteryShuffle(createdUserDtoList.
-                stream().
-                map((santaUserDto) ->
-                        {
-                            SantaUsersPairDto santaUsersPairDto = new SantaUsersPairDto();
-                            santaUsersPairDto.setSantaUserDtoFirst(santaUserDto);
-                            return santaUsersPairDto;
-                        }
-                ).collect(Collectors.toList()));
-
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        List<SantaUser> listOfUsers = santaUserRepo.
-                findAllByAdminDtoAdminId(adminDto.getAdminId()).
-                stream().
-                map(UserMapper::mapToSantaUserFromSantaUserDto).
-                collect(Collectors.toList());
-
-
-        return listOfUsers;
-
-         */
 
 
 

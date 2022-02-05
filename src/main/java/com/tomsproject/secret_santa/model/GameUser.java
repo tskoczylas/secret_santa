@@ -9,9 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GameUser {
 
-    long userid;
-    String firstName;
-    String lastName;
-    boolean isUserComplete;
-    String email;
+    private long userid;
+    private  String firstName;
+    private  String lastName;
+    private  boolean isUserComplete;
+    private  String email;
 }

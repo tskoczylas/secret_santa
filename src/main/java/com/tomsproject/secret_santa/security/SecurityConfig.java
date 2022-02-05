@@ -1,6 +1,5 @@
 package com.tomsproject.secret_santa.security;
 
-//import com.tomsproject.secret_santa.controller.ConfigController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,20 +13,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.servlet.Filter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsService userDetailsService;
-    private PasswordEncoder passwordEncoder;
+    final UserDetailsService userDetailsService;
+    final PasswordEncoder passwordEncoder;
 
 
     public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
+
+    //set up a password encoder - BCrypt
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -38,27 +38,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
+        //change default authentication login url
         authenticationFilter.setFilterProcessesUrl("/api/login");
 
-
-          http.cors();
+        //check if front end and back end have the same port and cors header
+        http.cors();
+        //we are using a token authorization - there is no cookies csrf safe
         http.csrf().disable().authorizeHttpRequests();
-        http.authorizeHttpRequests().antMatchers(
-                HttpMethod.GET,
-                "/index*", "/static/**", "/*.js", "/*.json", "/*.ico")
-                .permitAll();
-
-
+        // we are using a token authorization - There is no reason for creating a session,
+        //session is out token timeout
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        //paths witch requires authentication
         http.authorizeHttpRequests().antMatchers(HttpMethod.GET,"/api/getAdmin/**").authenticated();
-        http.authorizeHttpRequests().antMatchers(HttpMethod.GET,"/api/admin/**").permitAll();
         http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/api/game/**").authenticated();
-//
         http.authorizeHttpRequests().antMatchers(HttpMethod.POST,"/api/user/create/**").authenticated();
+
+        //there is no need to authentication - everybody can sign and can open a token message to lottery participants
+        http.authorizeHttpRequests().antMatchers(HttpMethod.GET,"/api/admin/**").permitAll();
+         //add  authenticationFilter - allow to authentication  in AuthenticationFilter class
+
         http.addFilter(authenticationFilter);
+        //add authorization as UsernamePasswordAuthenticationFilter (implementing in  AuthorizationFilter)
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
-       // http.addFilter(new ConfigController());
 
     }
 

@@ -1,13 +1,10 @@
-package com.tomsproject.secret_santa.dto;
+package com.tomsproject.secret_santa.entity;
 
 import com.tomsproject.secret_santa.enums.RoleEnum;
-import com.tomsproject.secret_santa.repo.AdminRepo;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.validation.annotation.Validated;
+
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -17,39 +14,37 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class AdminEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long adminId;
+    private long adminId;
 
     @NotNull
     @NotBlank
-    String firstName;
+    private String firstName;
 
     @NotNull
     @NotBlank
-    String secondName;
+    private String secondName;
 
     @NotNull
     @NotBlank
-    String email;
+    private String email;
 
     @NotNull
     @NotBlank
-    String password;
+    private   String password;
 
-    boolean isActive;
-    String activationToken;
-
-    String emailConformationSentId;
-
+    private boolean isActive;
+    private  String activationToken;
+    private String emailConformationSentId;
 
     @Enumerated(EnumType.ORDINAL)
-    RoleEnum roleEnum;
+    private RoleEnum roleEnum;
 
     @OneToMany(mappedBy = "adminDto")
-    List<GameDto> gameDtoList;
+    private List<GameEntity> gameDtoList;
 
 
 
