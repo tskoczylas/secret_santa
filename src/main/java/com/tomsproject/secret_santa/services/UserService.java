@@ -2,17 +2,16 @@ package com.tomsproject.secret_santa.services;
 
 import com.tomsproject.secret_santa.repo.SantaUserRepo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    SantaUserRepo santaUserRepo;
+   final SantaUserRepo santaUserRepo;
 
-    public UserService(SantaUserRepo santaUserRepo) {
-        this.santaUserRepo = santaUserRepo;
-    }
 
 
 

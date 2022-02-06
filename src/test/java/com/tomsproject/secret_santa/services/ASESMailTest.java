@@ -15,11 +15,11 @@ import java.util.List;
 @TestPropertySource(locations = "/application.properties")
 
 class ASESMailTest {
-     SantaUserEntity santaUserEntity = new SantaUserEntity();
+     final SantaUserEntity santaUserEntity = new SantaUserEntity();
 
-    List<SantaUserEntity> userDtoList =List.of(santaUserEntity);
-    GameEntity gameDto = new GameEntity();
-    AdminEntity adminDto = new AdminEntity();
+    final List<SantaUserEntity> userDtoList =List.of(santaUserEntity);
+    final GameEntity gameDto = new GameEntity();
+    final AdminEntity adminDto = new AdminEntity();
 
 
     @Test

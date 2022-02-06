@@ -1,5 +1,6 @@
 package com.tomsproject.secret_santa.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,16 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    final UserDetailsService userDetailsService;
-    final PasswordEncoder passwordEncoder;
+     final UserDetailsService userDetailsService;
+     final PasswordEncoder passwordEncoder;
 
 
-    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     //set up a password encoder - BCrypt
 
@@ -45,8 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         //we are using a token authorization - there is no cookies csrf safe
         http.csrf().disable().authorizeHttpRequests();
-        // we are using a token authorization - There is no reason for creating a session,
-        //session is out token timeout
+
+        http.authorizeHttpRequests().antMatchers(
+                HttpMethod.GET,
+                "/index*", "/static/**", "/*.js", "/*.json", "/*.ico")
+                .permitAll();
+
+
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         //paths witch requires authentication

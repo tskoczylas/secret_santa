@@ -8,15 +8,15 @@ export const validateEmail = (email) => {
         );
 };
 
-export function  passwordErrorHandler(password){
+export function passwordErrorHandler(password) {
     return !String(password).match(passwordRexVal)
 }
 
-export function rePasswordErrorHandler(re_password,password){
-    return re_password !== password ||re_password.length===0
+export function rePasswordErrorHandler(re_password, password) {
+    return re_password !== password || re_password.length === 0
 }
 
-export function nameErrorHandler(name){
+export function nameErrorHandler(name) {
 
-    return String(name).length<1 &&  String(name).length<1
+    return String(name).length < 1 && String(name).length < 1
 }

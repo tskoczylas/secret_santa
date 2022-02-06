@@ -19,9 +19,9 @@ import java.util.Optional;
 @Log4j2
 public class UserController {
 
-    SantaUserAndAdminServiceImp santaUserService;
-    GameService gameService;
-    AdminService adminService;
+    final SantaUserAndAdminServiceImp santaUserService;
+    final GameService gameService;
+    final AdminService adminService;
 
     public UserController(SantaUserAndAdminServiceImp santaUserService, GameService gameService, AdminService adminService) {
         this.santaUserService = santaUserService;

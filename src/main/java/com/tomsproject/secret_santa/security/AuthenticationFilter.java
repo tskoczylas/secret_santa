@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,7 +28,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Log4j2
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    final AuthenticationManager authenticationManager;
+     final AuthenticationManager authenticationManager;
 
     AuthenticationFilter(AuthenticationManager authenticationManager){
         this.authenticationManager=authenticationManager;
@@ -38,8 +39,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        log.info("attempt authentication" + request);
-        log.info("attempt authentication response" + response);
+        log.info("Attempt authentication. User: " + request.getParameter("login"));
+         log.info("Attempt authentication response. Status: " + response.getStatus()
+        );
         //get login and password from request
 
         String adminName=request.getParameter("login");
@@ -78,6 +80,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         Map<String,String> tokens= new HashMap<>();
         tokens.put("access_token",accessToken);
 
+
         response.setContentType(APPLICATION_JSON_VALUE);
         //Convert tokenMap to JSON response
         try {
@@ -86,10 +89,15 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
            log.error("Error inside successfulAuthentication - " +
                    "TOKEN can not be map to StreamOutput "+ e.getMessage());
 
-        }
+        }}
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        super.unsuccessfulAuthentication(request, response, failed);
+        log.info("Unsuccessful authentication. Login: " + request.getParameter("login") +
+                ", Message:  " + failed.getMessage()
+                );
 
 
-    }
 
-
-}
+}}

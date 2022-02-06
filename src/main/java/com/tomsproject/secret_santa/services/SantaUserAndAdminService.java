@@ -3,7 +3,6 @@ package com.tomsproject.secret_santa.services;
 import com.tomsproject.secret_santa.model.Admin;
 import com.tomsproject.secret_santa.model.TokenUser;
 
-import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 public interface SantaUserAndAdminService {
@@ -11,11 +10,7 @@ public interface SantaUserAndAdminService {
 
    TokenUser saveUserResponse(TokenUser tokenUser);
 
-
     boolean isCorrectAdmin(long id);
-
-
-
 
     TokenUser findUserByTokenId(String token);
 

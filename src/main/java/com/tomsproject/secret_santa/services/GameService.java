@@ -13,6 +13,7 @@ import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.GameRepo;
 import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
 import com.tomsproject.secret_santa.repo.SantaUserRepo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,25 +28,16 @@ import static com.tomsproject.secret_santa.mapper.GameMapper.mapToGameDtoFromCre
 
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class GameService {
 
     final SantaUserRepo santaUserRepo;
     final AdminRepo adminRepo;
-    final SantaUserPairRepo santaUserPairRepo;
-    final ScheduleService scheduleService;
     final GameRepo gameRepo;
     final ASESMail asesMail;
     final SantaUserAndAdminService santaUserAndAdminService;
 
-    public GameService(SantaUserRepo santaUserRepo, AdminRepo adminRepo, SantaUserPairRepo santaUserPairRepo, ScheduleService scheduleService, GameRepo gameRepo, ASESMail asesMail, SantaUserAndAdminService santaUserAndAdminService) {
-        this.santaUserRepo = santaUserRepo;
-        this.adminRepo = adminRepo;
-        this.santaUserPairRepo = santaUserPairRepo;
-        this.scheduleService = scheduleService;
-        this.gameRepo = gameRepo;
-        this.asesMail = asesMail;
-        this.santaUserAndAdminService = santaUserAndAdminService;
-    }
+
 
     public boolean createGame(CreateUser createUser) {
 

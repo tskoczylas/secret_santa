@@ -8,14 +8,13 @@ import com.tomsproject.secret_santa.model.Admin;
 import com.tomsproject.secret_santa.model.TokenUser;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.GameRepo;
-import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
 import com.tomsproject.secret_santa.repo.SantaUserRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -26,26 +25,12 @@ import static com.tomsproject.secret_santa.mapper.UserMapper.*;
 
 
 @Service
-
+@RequiredArgsConstructor
 public class SantaUserAndAdminServiceImp implements  UserDetailsService, SantaUserAndAdminService {
 
    final   SantaUserRepo santaUserRepo;
    final AdminRepo adminRepo;
-   final SantaUserPairRepo santaUserPairRepo;
-   final ScheduleService scheduleService;
-   final PasswordEncoder passwordEncoder;
    final GameRepo gameRepo;
-
-    public SantaUserAndAdminServiceImp(SantaUserRepo santaUserRepo, AdminRepo adminRepo, SantaUserPairRepo santaUserPairRepo, ScheduleService scheduleService, PasswordEncoder passwordEncoder, GameRepo gameRepo) {
-        this.santaUserRepo = santaUserRepo;
-        this.adminRepo = adminRepo;
-        this.santaUserPairRepo = santaUserPairRepo;
-        this.scheduleService = scheduleService;
-        this.passwordEncoder = passwordEncoder;
-        this.gameRepo = gameRepo;
-    }
-
-
 
 
 
@@ -139,7 +124,6 @@ public class SantaUserAndAdminServiceImp implements  UserDetailsService, SantaUs
                         singleton(new SimpleGrantedAuthority(adminDto.
                                 getRoleEnum().
                                 name()));
-
 
 
         return new User(adminDto.getEmail(),adminDto.getPassword(),adminDto.isActive(),true,true,true,authorities);

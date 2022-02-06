@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class CreateUserTest {
 
 
-    List<String>  validEmailList= List.of("sample@valid.com","sampple@valid.com");
+    final List<String>  validEmailList= List.of("sample@valid.com","sampple@valid.com");
 
-    CreateUser validUser = new CreateUser(validEmailList, LocalDateTime.now().plusMinutes(45),LocalDateTime.now().plusHours(13),"game", 2L,"sample",false);
+    final CreateUser validUser = new CreateUser(validEmailList, LocalDateTime.now().plusMinutes(45),LocalDateTime.now().plusHours(13),"game", 2L,"sample",false);
 
 
 

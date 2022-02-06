@@ -6,7 +6,7 @@ import TokenFounded from "./TokenFounded";
 import {useContext} from "react";
 
 
-function FoundToken(){
+function FoundToken() {
 
     const userData = useContext(TokenContex);
 

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
 function CircularProgressWithLabel(props) {
     return (
-        <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+        <Box sx={{position: 'relative', display: 'inline-flex'}}>
             <CircularProgress variant="determinate" {...props} />
             <Box
                 sx={{
@@ -41,9 +41,8 @@ CircularProgressWithLabel.propTypes = {
 export default function CircularStatic(props) {
     const [progress, setProgress] = React.useState(10);
 
-    useEffect(()=>setProgress(props.progress),[])
+    useEffect(() => setProgress(props.progress), [])
 
 
-
-    return <CircularProgressWithLabel value={progress} />;
+    return <CircularProgressWithLabel value={progress}/>;
 }

@@ -1,29 +1,28 @@
 import axios from "axios";
-import {passwordRexVal} from "../pages/SignIn/SignIn";
-import {useState} from "react";
 
-export default function saveAdmin(data,progress){
+export default function saveAdmin(data, progress) {
 
 
+    return (
 
-return(
 
+        axios
+            .post("/api/admin/create",
+                data
+            ).then(response => {
 
-    axios
-        .post("/api/admin/create",
-            data
-            ).then(response=>{
-
-        return response}).
-    catch(err=>
-        { return err  }
-    ) )
+            return response
+        })
+            .catch(err => {
+                    return err
+                }
+            ))
 
 }
 
 export function convFormToObj(currentTarget) {
     let formData = new FormData(currentTarget)
-    return    {
+    return {
         email: formData.get("email"),
         reEmail: formData.get("emailRe"),
         password: formData.get("password"),
@@ -34,15 +33,15 @@ export function convFormToObj(currentTarget) {
     }
 }
 
-export const  defaultSignInData = {
-        email: "not_valid",
-        reEmail: "",
-        password:"",
-        re_password: "",
-        firstName: "",
-        secondName: "",
-        checkbox: "",
-    }
+export const defaultSignInData = {
+    email: "not_valid",
+    reEmail: "",
+    password: "",
+    re_password: "",
+    firstName: "",
+    secondName: "",
+    checkbox: "",
+}
 
 
 

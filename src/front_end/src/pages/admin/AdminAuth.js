@@ -1,9 +1,7 @@
 import axios from "axios";
 import React from "react";
-import { useEffect, useState} from "react";
-import Logout from "../Logout";
+import {useEffect, useState} from "react";
 import Admin from "./Admin";
-import { TokenContex } from "../token/TokenMain";
 
 import SmallTemplate from "../SmallTemplate";
 import {defaultAdmin} from "../../data/DefaultData";
@@ -14,35 +12,35 @@ export const AdminContex = React.createContext(defaultAdmin());
 export default function AdminAuth() {
 
 
-  const [getData, setData] = useState(defaultAdmin);
-  const[errorResponse,setErrorResponse] = useState(false)
-  const user = localStorage.getItem("adminName");
-  const token = JSON.parse(localStorage.getItem("token"));
+    const [getData, setData] = useState(defaultAdmin);
+    const [errorResponse, setErrorResponse] = useState(false)
+    const user = localStorage.getItem("adminName");
+    const token = JSON.parse(localStorage.getItem("token"));
 
-  useEffect(() => {
-    axios
-      .get("/api/getAdmin/" + user, {
-        headers: {
-          Authorization: "Bearer " + token.access_token,
-        },
-      })
-      .then((res) => {
-        setData(res);
-      })
-      .catch((err) => {
-        setErrorResponse(true);
-      });
-  }, []);
+    useEffect(() => {
+        axios
+            .get("/api/getAdmin/" + user, {
+                headers: {
+                    Authorization: "Bearer " + token.access_token,
+                },
+            })
+            .then((res) => {
+                setData(res);
+            })
+            .catch((err) => {
+                setErrorResponse(true);
+            });
+    }, []);
 
 
-    if (getData ===0) return <SmallTemplate maxWidth="sm" loading />;
-    else if(errorResponse) return <LogIn/>
+    if (getData === 0) return <SmallTemplate maxWidth="sm" loading/>;
+    else if (errorResponse) return <LogIn/>
     else
-      return (
+        return (
 
-      <AdminContex.Provider value={getData}>
-          <Admin data={getData} />
-      </AdminContex.Provider>
-      );
-  }
+            <AdminContex.Provider value={getData}>
+                <Admin data={getData}/>
+            </AdminContex.Provider>
+        );
+}
 

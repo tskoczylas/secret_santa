@@ -17,7 +17,7 @@ import java.util.List;
 public class GameController {
 
 
-   final GameService gameService;
+    final GameService gameService;
 
     public GameController(GameService gameService) {
         this.gameService = gameService;

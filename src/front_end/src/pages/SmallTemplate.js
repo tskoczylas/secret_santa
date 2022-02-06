@@ -1,17 +1,11 @@
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import {useContext} from "react";
 import {CircularProgress, createTheme, ThemeProvider} from "@mui/material";
 
-import LoadingForm from "../components/LoadingForm";
 import santa from "../jpg/santa.jpg";
-import {TokenContex} from "./token/TokenMain";
 import Copyright from "../components/Copyright";
-import TokenFounded from "./token/TokenFounded";
-import FillToken from "./token/FillToken";
 
 export default function SmallTemplate(props) {
 
@@ -38,25 +32,25 @@ export default function SmallTemplate(props) {
 
 
                         border: '2px groove red',
-                       borderRadius: "10px",
+                        borderRadius: "10px",
                         display: "flex",
                         flexDirection: "column",
-                       alignItems: "center",
+                        alignItems: "center",
                     }}
                 >
 
 
-                        <Avatar
+                    <Avatar
 
-                            sx={{width: 60, height: 60, marginTop:2}}
-                            alt="santa"
-                            src={santa}
-                        ></Avatar>
+                        sx={{width: 60, height: 60, marginTop: 2}}
+                        alt="santa"
+                        src={santa}
+                    ></Avatar>
 
-                    {props.loading?<CircularProgress/>: "" }
+                    {props.loading ? <CircularProgress/> : ""}
 
                     {props.children}
-                    <Copyright sx={{mt: 1,marginBottom:3}}/>
+                    <Copyright sx={{mt: 1, marginBottom: 3}}/>
 
                 </Box>
             </Container>

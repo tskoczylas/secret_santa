@@ -3,11 +3,12 @@ import Typography from "@mui/material/Typography";
 import {textTemplate} from "../data/textTemplate";
 import Button from "@mui/material/Button";
 import {Link, useNavigate} from "react-router-dom";
-export default function Logout (){
 
-    let navigate=useNavigate;
+export default function Logout() {
 
-    return(
+    let navigate = useNavigate;
+
+    return (
         <SmallTemplate maxWidth="sm">
             <Typography>
                 {textTemplate.logout.message}
@@ -15,7 +16,7 @@ export default function Logout (){
 
             <Link to={"/login"}>
                 <Button>
-                {textTemplate.logout.button}
+                    {textTemplate.logout.button}
                 </Button>
             </Link>
 

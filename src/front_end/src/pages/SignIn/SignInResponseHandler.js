@@ -1,42 +1,41 @@
-
-
-import {Alert, AlertTitle} from "@mui/lab";
-import {Button, CircularProgress, LinearProgress, Link} from "@mui/material";
-import {adminLeftMenu, textTemplate} from "../../data/textTemplate";
+import {Alert} from "@mui/lab";
+import {Button, LinearProgress} from "@mui/material";
+import {textTemplate} from "../../data/textTemplate";
 import {useEffect, useState} from "react";
 import {trackPromise, usePromiseTracker} from "react-promise-tracker";
 import {useNavigate} from "react-router-dom";
 
-export default function SignInResponseHandler({button,data}){
+export default function SignInResponseHandler({button, data}) {
 
 
+    const [response, setResponse] = useState("inactive")
+    const {promiseInProgress} = usePromiseTracker();
+    useEffect(() => {
 
-    const [response,setResponse] = useState("inactive")
-    const { promiseInProgress } = usePromiseTracker();
-useEffect(()=>{
+        if (data !== "inactive") {
 
-    if(data!=="inactive"){
-
-        const promise=
-        data.then((res)=>{
-            setResponse(res)
-
-
-        }).catch((er)=>{setResponse(er)})
-
-        trackPromise(promise)
+            const promise =
+                data.then((res) => {
+                    setResponse(res)
 
 
-    }
+                }).catch((er) => {
+                    setResponse(er)
+                })
+
+            trackPromise(promise)
 
 
-    },[data])
+        }
 
 
-let navigate = useNavigate()
+    }, [data])
 
 
-    function alert(severity,alertText) {
+    let navigate = useNavigate()
+
+
+    function alert(severity, alertText) {
 
         return (
 
@@ -44,7 +43,9 @@ let navigate = useNavigate()
                 action={
                     <Button size="small" variant="outlined"
 
-                            onClick = {()=>{navigate("/login")}}>{textTemplate.signin.confirm.button}</Button>
+                            onClick={() => {
+                                navigate("/login")
+                            }}>{textTemplate.signin.confirm.button}</Button>
                 }
                 severity={severity}> {alertText}
 
@@ -55,15 +56,15 @@ let navigate = useNavigate()
     }
 
     console.log(response)
-    if (promiseInProgress===true || response===undefined) return <LinearProgress />
-    else if(response==="inactive")  return  ""
-    else if(response.status===200)  { button(true)
-        return  alert("success",textTemplate.signin.response_valid)}
-    else if(response.status===203)  return alert("warning",textTemplate.signin.mail_error)
-    else if(response.status===204)  return alert("warning",textTemplate.signin.response_email_bad)
+    if (promiseInProgress === true || response === undefined) return <LinearProgress/>
+    else if (response === "inactive") return ""
+    else if (response.status === 200) {
+        button(true)
+        return alert("success", textTemplate.signin.response_valid)
+    } else if (response.status === 203) return alert("warning", textTemplate.signin.mail_error)
+    else if (response.status === 204) return alert("warning", textTemplate.signin.response_email_bad)
 
-    else   return alert("error",textTemplate.signin.response_bad)
-
+    else return alert("error", textTemplate.signin.response_bad)
 
 
     /*
@@ -72,8 +73,6 @@ let navigate = useNavigate()
            else return ''
 
     */
-
-
 
 
 }

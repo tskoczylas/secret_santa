@@ -6,6 +6,7 @@ import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.GameRepo;
 import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
 import com.tomsproject.secret_santa.repo.SantaUserRepo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,27 +21,21 @@ import static com.tomsproject.secret_santa.util.DrawnPairs.lotteryShuffle;
 
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class ScheduleServiceImp implements ScheduleService {
 
     @Value("${schedule.timeout")
     private String scheduleTimeout;
 
 
+    final AdminRepo adminRepo;
+    final SantaUserPairRepo santaUserPairRepo;
+    final SantaUserRepo santaUserRepo;
+    final GameRepo gameRepo;
+    final ASESMail asesMail;
 
-    AdminRepo adminRepo;
-    SantaUserPairRepo santaUserPairRepo;
-    SantaUserRepo santaUserRepo;
-    GameRepo gameRepo;
-    ASESMail asesMail;
 
 
-    public ScheduleServiceImp(AdminRepo adminRepo, SantaUserPairRepo santaUserPairRepo, SantaUserRepo santaUserRepo, GameRepo gameRepo, ASESMail asesMail) {
-        this.adminRepo = adminRepo;
-        this.santaUserPairRepo = santaUserPairRepo;
-        this.santaUserRepo = santaUserRepo;
-        this.gameRepo = gameRepo;
-        this.asesMail = asesMail;
-    }
     //toDo - implement scheduleTimeout as parameter from application prop
 
     @Override
