@@ -39,7 +39,7 @@ https://justsecretsanta.com
 - Axios
 
 3. The App has been deployed using #Maven and #Docker on #AWS Elastic Beanstalk 
-## Things to do:
+## toDo list
 - [ ] Fix SIGNLE RESPONSIBILITY PRINCIPAL VIOLATION -> Admin, CreateUser, TokenUser
 - [ ] Endpoints names - > Plural 
 - [ ] Create global error handler
