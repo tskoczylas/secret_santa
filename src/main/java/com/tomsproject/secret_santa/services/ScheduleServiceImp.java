@@ -26,15 +26,11 @@ public class ScheduleServiceImp implements ScheduleService {
 
     @Value("${schedule.timeout")
     private String scheduleTimeout;
-
-
     final AdminRepo adminRepo;
     final SantaUserPairRepo santaUserPairRepo;
     final SantaUserRepo santaUserRepo;
     final GameRepo gameRepo;
     final ASESMail asesMail;
-
-
 
     //toDo - implement scheduleTimeout as parameter from application prop
 
@@ -44,24 +40,18 @@ public class ScheduleServiceImp implements ScheduleService {
 
 
        gameRepo.getNotCompletedGameAfterLastResponseDate(LocalDateTime.now()).ifPresent(
-
-
                 game -> {
 
                     try{
                         List<SantaUserEntity> completedUsersList = game.getUserList().stream().dropWhile(santaUserDto -> !santaUserDto.isUserComplete()).collect(Collectors.toList());
                         if(completedUsersList.size()>1){
-
                             List<SantaUsersPairEntity> savedPairs =
                                     santaUserPairRepo.saveAll(createPairsAndRunLottery(completedUsersList));
 
                             for (int i = 0; i < savedPairs.size(); i++) {
                                 completedUsersList.get(i).setSantaUsersPairDto(savedPairs.get(i));
                             }
-
-
                         }
-
 
                         List<SantaUserEntity> mailSentUserDto = asesMail.sendLotteryResult(completedUsersList);
                         santaUserRepo.saveAll(mailSentUserDto);

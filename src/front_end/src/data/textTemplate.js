@@ -1,8 +1,7 @@
-//do not change a array position !!!
+//do not change an array position !!!
 import {timeOutLastResponseDate} from "../pages/admin/newGame/SecondStep";
 import {maxUserMessageLength} from "../pages/admin/newGame/NewGame";
 
-//Seb - > nazwy ponizej do przemyslenia - krotkie, zwiezle
 export const adminLeftMenu = ['New', 'Current', 'Expired'];
 
 export const adminRightMenu = ['Account', 'Log out'];
@@ -19,7 +18,7 @@ export const textTemplate =
             h1: "Welcome to JustSecretSanta App",
             h6: "The Secret Santa gift exchange has never been so simple!",
             prim_1: "Simple",
-            item_1: "You just need to sign in and create an email list to randomly assign participants.",
+            item_1: "You just need to sign in and enter the email address of people taking part.",
             prim_2: "Fast",
             item_2: "The system will automatically send questionnaire to each person, asking for short description of their ideal present.",
             prim_3: "Efficient",
@@ -28,8 +27,8 @@ export const textTemplate =
             item_4: "The identity of the gift giver will remain a secret to everybody, including you. Enjoy!",
             signin: "Sign in",
             login: "Log in",
-            created_by: " Project created by " +
-                "Tomasz Skoczylas, a self-taught Java/JavaStrict Developer."
+            created_by: " Project created in React&SpringBoot by  " +
+                "  Tomasz Skoczylas,   a self-taught Software Developer."
 
 
         },

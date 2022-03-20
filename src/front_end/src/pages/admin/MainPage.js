@@ -23,7 +23,7 @@ export default function MainPage() {
     return (
 
         <SmallTemplate maxWidth="xs">
-            <Grid mt={1} alignItems="center" alignContent="center" textAlign="center" container spacing={3}>
+            <Grid mt={1} alignItems="center" alignContent="center" textAlign="center" container spacing={2}>
                 <Grid item xs={12} sm={12}>
                     <Typography variant="h6" sx={{fontWeight: "bold"}}>
                         {textTemplate.main_page.h1}
@@ -138,7 +138,6 @@ export default function MainPage() {
                         size="small"
                         onClick={() => navigate("/signin")}
                         variant="outlined"
-
                     >
                         {textTemplate.main_page.signin}
                     </Button>
@@ -160,7 +159,7 @@ export default function MainPage() {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                    <Typography sx={{fontSize: 12}}>
+                    <Typography sx={{maxWidth:"90%",fontSize: 12}}>
                         {textTemplate.main_page.created_by}
                     </Typography>
 

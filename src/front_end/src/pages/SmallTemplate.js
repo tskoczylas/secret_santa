@@ -28,9 +28,8 @@ export default function SmallTemplate(props) {
 
                 <Box
                     sx={{
-                        marginTop: 8,
-
-
+                        marginTop: 2,
+                        mb:2,
                         border: '2px groove red',
                         borderRadius: "10px",
                         display: "flex",
@@ -38,7 +37,6 @@ export default function SmallTemplate(props) {
                         alignItems: "center",
                     }}
                 >
-
 
                     <Avatar
 
@@ -50,7 +48,7 @@ export default function SmallTemplate(props) {
                     {props.loading ? <CircularProgress/> : ""}
 
                     {props.children}
-                    <Copyright sx={{mt: 1, marginBottom: 3}}/>
+                    <Copyright sx={{mt: 1, marginBottom: 2}}/>
 
                 </Box>
             </Container>

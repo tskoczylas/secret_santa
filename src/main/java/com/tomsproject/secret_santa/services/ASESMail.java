@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.PostConstruct;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 
@@ -56,11 +59,14 @@ public class ASESMail {
             template.setTemplate(templateId);
             template.setSource(mailFrom);
 
+            String formatDate = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                    .format(gameDto.getLastResponseDate());
+
             template.setTemplateData("{\"name\":\"" + gameDto.getAdminDto().getFirstName() + "\"," +
                     "\"lastName\":\"" + gameDto.getAdminDto().getSecondName() + "\"," +
                     "\"message\":\"" + gameDto.getUserText() + "\"," +
                     "\"link\":\""+hostName + "/token/" + user.getUserid() + "\"," +
-                    "\"date\":\"" + gameDto.getLastResponseDate().format(DateTimeFormatter.ISO_DATE_TIME) + "\"}"
+                    "\"date\":\"" + formatDate + "\"}"
             );
             SendTemplatedEmailResult sendTemplatedEmailResult = getSendTemplatedEmailResult(template);
 
