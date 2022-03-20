@@ -39,7 +39,13 @@ https://justsecretsanta.com
 - Axios
 
 3. The App has been deployed using #Maven and #Docker on #AWS Elastic Beanstalk 
-## Things to do:
-- [ ] Wirte rest of Java Test #1
-- [ ] Wirte rest of JavaScript Test #2
-- [ ] Account panel - password change feature      
+## toDo list
+- [ ] Fix SIGNLE RESPONSIBILITY PRINCIPAL VIOLATION -> Admin, CreateUser, TokenUser
+- [ ] Endpoints names - > Plural 
+- [ ] Create global error handler
+- [ ] Remove ResponseEntity from GameService!!
+- [ ] Separate Admin and User Service 
+- [ ] Write rest of Java Test #1
+- [ ] Write rest of JavaScript Test #2
+- [ ] Account panel - password change feature
+ 
