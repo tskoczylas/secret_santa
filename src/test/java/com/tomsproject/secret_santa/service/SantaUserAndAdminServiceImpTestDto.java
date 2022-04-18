@@ -1,7 +1,7 @@
 package com.tomsproject.secret_santa.service;
 
 import com.tomsproject.secret_santa.repo.SantaUserRepo;
-import com.tomsproject.secret_santa.services.SantaUserAndAdminServiceImp;
+import com.tomsproject.secret_santa.services.SantaUserServiceImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,13 +11,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-class SantaUserAndAdminServiceImpTest {
+class SantaUserAndAdminServiceImpTestDto {
 
 
     @Mock
     SantaUserRepo santaUserRepo;
     @InjectMocks
-    SantaUserAndAdminServiceImp santaUserAndAdminService;
+    SantaUserServiceImp santaUserAndAdminService;
 
 
 

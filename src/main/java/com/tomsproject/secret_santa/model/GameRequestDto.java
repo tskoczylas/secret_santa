@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class GameRequest {
+public class GameRequestDto {
 
     private String id;
     private boolean isComplete ;

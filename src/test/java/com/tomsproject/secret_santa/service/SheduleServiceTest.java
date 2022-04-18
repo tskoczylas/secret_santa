@@ -1,6 +1,6 @@
 package com.tomsproject.secret_santa.service;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.SantaUsersPairEntity;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
@@ -21,7 +21,7 @@ class SheduleServiceTest {
     ScheduleService scheduleService;
 
     @Captor
-    ArgumentCaptor<AdminEntity> adminDtoArgumentCaptor;
+    ArgumentCaptor<Admin> adminDtoArgumentCaptor;
 
     @Captor
     ArgumentCaptor<SantaUsersPairEntity> santaUsersPairDtoArgumentCaptor;

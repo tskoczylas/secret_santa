@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Game {
+public class GameDto {
     private long gameId;
     private String gameName;
     private LocalDateTime startDate;

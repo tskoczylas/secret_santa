@@ -2,22 +2,16 @@ import axios from "axios";
 
 export default function saveAdmin(data, progress) {
 
-
+console.log(data)
     return (
-
-
         axios
-            .post("/api/admin/create",
-                data
-            ).then(response => {
-
-            return response
-        })
+            .post("/api/admin/create", data)
+            .then(response => {
+                return response
+            })
             .catch(err => {
-                    return err
-                }
-            ))
-
+                return err
+            }))
 }
 
 export function convFormToObj(currentTarget) {

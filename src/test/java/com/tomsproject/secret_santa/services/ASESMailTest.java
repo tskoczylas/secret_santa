@@ -1,6 +1,6 @@
 package com.tomsproject.secret_santa.services;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.GameEntity;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import org.junit.jupiter.api.Disabled;
@@ -19,7 +19,7 @@ class ASESMailTest {
 
     final List<SantaUserEntity> userDtoList =List.of(santaUserEntity);
     final GameEntity gameDto = new GameEntity();
-    final AdminEntity adminDto = new AdminEntity();
+    final Admin adminDto = new Admin();
 
 
     @Test

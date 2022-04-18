@@ -14,7 +14,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminEntity {
+@Table(name = "admin_entity")
+public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

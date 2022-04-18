@@ -1,11 +1,11 @@
 package com.tomsproject.secret_santa.services;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.GameEntity;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import com.tomsproject.secret_santa.mapper.AdminMapper;
-import com.tomsproject.secret_santa.model.Admin;
-import com.tomsproject.secret_santa.model.TokenUser;
+import com.tomsproject.secret_santa.model.AdminDto;
+import com.tomsproject.secret_santa.model.TokenUserDto;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.GameRepo;
 import com.tomsproject.secret_santa.repo.SantaUserRepo;
@@ -26,7 +26,7 @@ import static com.tomsproject.secret_santa.mapper.UserMapper.*;
 
 @Service
 @RequiredArgsConstructor
-public class SantaUserAndAdminServiceImp implements  UserDetailsService, SantaUserAndAdminService {
+public class SantaUserServiceImp implements  UserDetailsService, SantaUserService {
 
    final   SantaUserRepo santaUserRepo;
    final AdminRepo adminRepo;
@@ -36,16 +36,16 @@ public class SantaUserAndAdminServiceImp implements  UserDetailsService, SantaUs
 
 
     @Override
-    public TokenUser saveUserResponse(TokenUser tokenUser) {
+    public TokenUserDto saveUserResponse(TokenUserDto tokenUserDto) {
 
         try{
-            Optional<SantaUserEntity> findUserById = santaUserRepo.findById(tokenUser.getUserid());
-            if(!tokenUser.isValidForSave()) return  new TokenUser(false,0);
+            Optional<SantaUserEntity> findUserById = santaUserRepo.findById(tokenUserDto.getUserid());
+            if(!tokenUserDto.isValidForSave()) return  new TokenUserDto(false,0);
             else if(findUserById.isPresent() ){
                 Optional<GameEntity> findGameDto= gameRepo.findById(findUserById.get().getGameDto().getGameId());
 
                 if(findGameDto.isPresent()){
-                SantaUserEntity userDto =mapToSantaUserDtoFromTokenUser(tokenUser);
+                SantaUserEntity userDto =mapToSantaUserDtoFromTokenUser(tokenUserDto);
                 userDto.setStartMessageSentId(findUserById.get().getStartMessageSentId());
                 userDto.setUserComplete(true);
                 userDto.setRoleEnum(findUserById.get().getRoleEnum());
@@ -53,13 +53,13 @@ public class SantaUserAndAdminServiceImp implements  UserDetailsService, SantaUs
                 userDto.setAdminDto(findGameDto.get().getAdminDto());
 
                 return mapToTokenUserFromSantaUserDto(santaUserRepo.save(userDto));}
-            else return new TokenUser(false,0);}
+            else return new TokenUserDto(false,0);}
 
-            else return new TokenUser(false,0);
+            else return new TokenUserDto(false,0);
 
         }
         catch (Exception e){
-            return new TokenUser(false,0);
+            return new TokenUserDto(false,0);
         }
     }
 
@@ -75,28 +75,28 @@ public class SantaUserAndAdminServiceImp implements  UserDetailsService, SantaUs
 
 
     @Override
-    public TokenUser findUserByTokenId(String token) {
+    public TokenUserDto findUserByTokenId(String token) {
 
         try {
             Optional<SantaUserEntity> optionalTokenUser = santaUserRepo.findById(Long.valueOf(token));
             if (optionalTokenUser.isPresent()) {
-                TokenUser santaUser = mapToTokenUserFromSantaUserDto(optionalTokenUser.get());
+                TokenUserDto santaUser = mapToTokenUserFromSantaUserDto(optionalTokenUser.get());
                 santaUser.setPercentageCompleteUsers(countActiveUsers(optionalTokenUser.get().getGameDto().getGameId()));
                 santaUser.setUserCreate(true);
 
                 return santaUser;
         }
-        else return new TokenUser(false, 0);
+        else return new TokenUserDto(false, 0);
         }
         catch (Exception e) {
-            return new TokenUser(false, 0);
+            return new TokenUserDto(false, 0);
         }
 
 
     }
 
     @Override
-    public Optional<Admin> getAdmin(String adminLogin) {
+    public Optional<AdminDto> getAdmin(String adminLogin) {
 
 
         return adminRepo.findAdminDtoByEmail(adminLogin).map(AdminMapper::mapToAdminFromAdminDto);
@@ -115,7 +115,7 @@ public class SantaUserAndAdminServiceImp implements  UserDetailsService, SantaUs
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        AdminEntity adminDto = adminRepo.findAdminDtoByEmail(username).orElseThrow(() -> {
+        Admin adminDto = adminRepo.findAdminDtoByEmail(username).orElseThrow(() -> {
             throw new UsernameNotFoundException("Admin " + username + "not found");
         });
 

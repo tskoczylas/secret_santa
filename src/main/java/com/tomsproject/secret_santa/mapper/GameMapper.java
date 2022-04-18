@@ -1,8 +1,8 @@
 package com.tomsproject.secret_santa.mapper;
 
 import com.tomsproject.secret_santa.entity.GameEntity;
-import com.tomsproject.secret_santa.model.CreateUser;
-import com.tomsproject.secret_santa.model.Game;
+import com.tomsproject.secret_santa.model.CreateUserDto;
+import com.tomsproject.secret_santa.model.GameDto;
 import org.modelmapper.ModelMapper;
 
 public class GameMapper {
@@ -12,18 +12,18 @@ public class GameMapper {
 
     private static ModelMapper modelMapper = new ModelMapper();
 
-    public static GameEntity mapToGameDtoFromCreateUser(CreateUser createUser) {
+    public static GameEntity mapToGameDtoFromCreateUser(CreateUserDto createUserDto) {
         GameEntity gameDto = new GameEntity();
         modelMapper = new ModelMapper();
-        modelMapper.map(createUser, gameDto);
+        modelMapper.map(createUserDto, gameDto);
         return gameDto;
     }
 
-    public static Game mapToGameFromGameDto(GameEntity gameEntity) {
-        Game game = new Game();
+    public static GameDto mapToGameFromGameDto(GameEntity gameEntity) {
+        GameDto gameDto = new GameDto();
         modelMapper = new ModelMapper();
-        modelMapper.map(gameEntity, game);
-        return game;
+        modelMapper.map(gameEntity, gameDto);
+        return gameDto;
     }
 
 }

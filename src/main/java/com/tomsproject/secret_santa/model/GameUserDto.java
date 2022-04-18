@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class GameUser {
+public class GameUserDto {
 
     private long userid;
     private  String firstName;

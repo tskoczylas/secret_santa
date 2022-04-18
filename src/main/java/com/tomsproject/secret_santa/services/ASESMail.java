@@ -6,7 +6,7 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simpleemail.model.*;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.GameEntity;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
 
@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.PostConstruct;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
@@ -105,7 +103,7 @@ public class ASESMail {
 
     }
 
-    public String  sendAccountCreateConfEmail(AdminEntity admin ) {
+    public String  sendAccountCreateConfEmail(Admin admin ) {
 
 
 

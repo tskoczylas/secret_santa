@@ -1,7 +1,7 @@
 package com.tomsproject.secret_santa.mapper;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
-import com.tomsproject.secret_santa.model.Admin;
+import com.tomsproject.secret_santa.entity.Admin;
+import com.tomsproject.secret_santa.model.AdminDto;
 import org.modelmapper.ModelMapper;
 
 public class AdminMapper {
@@ -11,17 +11,17 @@ public class AdminMapper {
 
     private static ModelMapper modelMapper = new ModelMapper();
 
-    public static Admin mapToAdminFromAdminDto(AdminEntity adminDto) {
-        Admin admin = new Admin();
+    public static AdminDto mapToAdminFromAdminDto(Admin adminDto) {
+        AdminDto admin = new AdminDto();
         modelMapper = new ModelMapper();
         modelMapper.map(adminDto, admin);
         return admin;
     }
-    public static AdminEntity mapToAdminDtoFromAdmin(Admin admin) {
-        AdminEntity adminEntity = new AdminEntity();
+    public static Admin mapToAdminFromAdminDto(AdminDto adminDto) {
+        Admin admin = new Admin();
         modelMapper = new ModelMapper();
-        modelMapper.map(admin, adminEntity);
-        return adminEntity;
+        modelMapper.map(adminDto, admin);
+        return admin;
     }
 
 

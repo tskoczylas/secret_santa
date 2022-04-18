@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class CreateUser {
+public class CreateUserDto {
 
 
    private List<String> emailList;

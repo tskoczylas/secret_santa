@@ -1,48 +1,44 @@
 package com.tomsproject.secret_santa.controller;
 
-import com.tomsproject.secret_santa.model.Admin;
-import com.tomsproject.secret_santa.model.CreateUser;
-import com.tomsproject.secret_santa.model.TokenUser;
-import com.tomsproject.secret_santa.services.AdminService;
+import com.tomsproject.secret_santa.model.AdminDto;
+import com.tomsproject.secret_santa.model.CreateUserDto;
+import com.tomsproject.secret_santa.model.TokenUserDto;
+import com.tomsproject.secret_santa.services.SantaAdminService;
 import com.tomsproject.secret_santa.services.GameService;
-import com.tomsproject.secret_santa.services.SantaUserAndAdminServiceImp;
+import com.tomsproject.secret_santa.services.SantaUserServiceImp;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 @Log4j2
+@RequiredArgsConstructor
 public class UserController {
 
-    final SantaUserAndAdminServiceImp santaUserService;
+    final SantaUserServiceImp santaUserService;
     final GameService gameService;
-    final AdminService adminService;
-
-    public UserController(SantaUserAndAdminServiceImp santaUserService, GameService gameService, AdminService adminService) {
-        this.santaUserService = santaUserService;
-        this.gameService = gameService;
-        this.adminService = adminService;
-    }
+    final SantaAdminService santaAdminService;
 
     @PostMapping("/user/save")
     public @ResponseBody
-    ResponseEntity<TokenUser> post(@RequestBody TokenUser tokenUser) {
+    ResponseEntity<TokenUserDto> post(@RequestBody TokenUserDto tokenUserDto) {
 
-        return new ResponseEntity<>(santaUserService.saveUserResponse(tokenUser), HttpStatus.OK);
+        return new ResponseEntity<>(santaUserService.saveUserResponse(tokenUserDto), HttpStatus.OK);
     }
 
     @PostMapping("/user/create")
+    @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody
-    HttpStatus adminCreateUser(@RequestBody CreateUser createUser) {
-       if (!createUser.isValidForCreate()) return HttpStatus.NOT_ACCEPTABLE;
-       else if(!santaUserService.isCorrectAdmin(createUser.getAdminId())) return HttpStatus.NOT_FOUND;
-       else if(adminService.isOverActiveGameLimit(createUser.getAdminId())) return HttpStatus.TOO_MANY_REQUESTS;
-       else if(!gameService.createGame(createUser)) return HttpStatus.INTERNAL_SERVER_ERROR;
+    HttpStatus createGame(@RequestBody CreateUserDto createUserDto) {
+       if (!createUserDto.isValidForCreate()) return HttpStatus.NOT_ACCEPTABLE;
+       else if(!santaUserService.isCorrectAdmin(createUserDto.getAdminId())) return HttpStatus.NOT_FOUND;
+       else if(santaAdminService.isOverActiveGameLimit(createUserDto.getAdminId())) return HttpStatus.TOO_MANY_REQUESTS;
+       else if(!gameService.createGame(createUserDto)) return HttpStatus.INTERNAL_SERVER_ERROR;
 
         else return HttpStatus.CREATED; }
 
@@ -52,7 +48,7 @@ public class UserController {
 
     @GetMapping("/santaToken/{tokenId}")
     public @ResponseBody
-    ResponseEntity<TokenUser> getUserByToken(@PathVariable String tokenId) {
+    ResponseEntity<TokenUserDto> getUserByToken(@PathVariable String tokenId) {
 
         return new ResponseEntity<>(santaUserService.
                 findUserByTokenId(tokenId), HttpStatus.OK);
@@ -62,12 +58,12 @@ public class UserController {
 
 
     @GetMapping("/getAdmin/{login}")
-    public ResponseEntity<Admin> getAdmin(@PathVariable String login){
+    public ResponseEntity<AdminDto> getAdmin(@PathVariable String login){
 
 
-        Optional<Admin> getAdmin=santaUserService.getAdmin(login);
+        Optional<AdminDto> getAdmin=santaUserService.getAdmin(login);
 
-        return new ResponseEntity<>( getAdmin.orElse(new Admin()),HttpStatus.OK);
+        return new ResponseEntity<>( getAdmin.orElse(new AdminDto()),HttpStatus.OK);
     }
 
 

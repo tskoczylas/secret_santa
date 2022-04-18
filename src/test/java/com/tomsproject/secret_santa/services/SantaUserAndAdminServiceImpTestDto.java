@@ -1,8 +1,8 @@
 package com.tomsproject.secret_santa.services;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
-import com.tomsproject.secret_santa.model.TokenUser;
+import com.tomsproject.secret_santa.model.TokenUserDto;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.GameRepo;
 import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class SantaUserAndAdminServiceImpTest {
+class SantaUserAndAdminServiceImpTestDto {
 
 @Mock
 private SantaUserRepo santaUserRepo;
@@ -36,7 +36,7 @@ private SantaUserRepo santaUserRepo;
 
 
 @InjectMocks
-SantaUserAndAdminServiceImp santaUserAndAdminServiceImp;
+SantaUserServiceImp santaUserServiceImp;
 
 
 
@@ -45,7 +45,7 @@ SantaUserAndAdminServiceImp santaUserAndAdminServiceImp;
         //given
         String token = "1234";
         SantaUserEntity santaUserEntity = new SantaUserEntity();
-        AdminEntity adminDto = new AdminEntity();
+        Admin adminDto = new Admin();
         adminDto.setAdminId(1);
       //  santaUserDto.setToken(token);
 
@@ -59,7 +59,7 @@ SantaUserAndAdminServiceImp santaUserAndAdminServiceImp;
        // when(santaUserRepo.countUsersCompletedByAdminId(1)).thenReturn(completedUsers);
        // when(santaUserRepo.countUsersCreatedByAdminID(1)).thenReturn(usersCreated);
 
-        TokenUser userByTokenId = santaUserAndAdminServiceImp.findUserByTokenId(token);
+        TokenUserDto userByTokenId = santaUserServiceImp.findUserByTokenId(token);
 
         //then
         System.out.println(userByTokenId);
@@ -82,7 +82,7 @@ SantaUserAndAdminServiceImp santaUserAndAdminServiceImp;
          when(santaUserRepo.countUsersCompletedByAdminId(1)).thenReturn(2L);
          when(santaUserRepo.countUsersCreatedByAdminID(1)).thenReturn(4L);
          //when
-        String res = santaUserAndAdminServiceImp.countActiveUsers(1L);
+        String res = santaUserServiceImp.countActiveUsers(1L);
         //then
         assertEquals(res,"50");
 
@@ -93,7 +93,7 @@ SantaUserAndAdminServiceImp santaUserAndAdminServiceImp;
         when(santaUserRepo.countUsersCompletedByAdminId(1)).thenReturn(2L);
         when(santaUserRepo.countUsersCreatedByAdminID(1)).thenReturn(0L);
         //when
-        String res = santaUserAndAdminServiceImp.countActiveUsers(1L);
+        String res = santaUserServiceImp.countActiveUsers(1L);
         //then
         assertEquals(res,"0");
 

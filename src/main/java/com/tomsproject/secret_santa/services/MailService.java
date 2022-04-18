@@ -7,7 +7,7 @@ import com.mailjet.client.transactional.SendContact;
 import com.mailjet.client.transactional.SendEmailsRequest;
 import com.mailjet.client.transactional.TransactionalEmail;
 import com.mailjet.client.transactional.response.SendEmailsResponse;
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.GameEntity;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ public class MailService {
     @Value("${mail.secret.key}")
     String secretKey;
 
-    void sendLink(List<SantaUserEntity> userDtoList, GameEntity gameDto, AdminEntity adminDto) throws  MailjetException {
+    void sendLink(List<SantaUserEntity> userDtoList, GameEntity gameDto, Admin adminDto) throws  MailjetException {
 
 
 

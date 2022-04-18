@@ -31,7 +31,7 @@ public class SantaUserEntity {
     private GameEntity gameDto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private AdminEntity adminDto;
+    private Admin adminDto;
 
 
     @OneToOne(fetch = FetchType.EAGER)

@@ -1,8 +1,8 @@
 package com.tomsproject.secret_santa.controller;
 
-import com.tomsproject.secret_santa.model.Game;
-import com.tomsproject.secret_santa.model.GameRequest;
-import com.tomsproject.secret_santa.model.GameUser;
+import com.tomsproject.secret_santa.model.GameDto;
+import com.tomsproject.secret_santa.model.GameRequestDto;
+import com.tomsproject.secret_santa.model.GameUserDto;
 import com.tomsproject.secret_santa.services.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,16 +25,13 @@ public class GameController {
 
 
     @PostMapping("/admin_games")
-    public ResponseEntity<List<Game>> getGames(@RequestBody GameRequest gameRequest){
-
-        return gameService.getGamesByAdminComplete(gameRequest.getId(),gameRequest.isComplete());
+    public ResponseEntity<List<GameDto>> getGames(@RequestBody GameRequestDto gameRequestDto){
+        return gameService.getGamesByAdminComplete(gameRequestDto.getId(), gameRequestDto.isComplete());
     }
 
     @PostMapping("/user_games")
-    public ResponseEntity<List<GameUser>> getUserGames(@RequestBody GameRequest gameRequest){
-
-
-        return gameService.getGamesUsersByGameComplete(gameRequest.getId(),gameRequest.isComplete());
+    public ResponseEntity<List<GameUserDto>> getUserGames(@RequestBody GameRequestDto gameRequestDto){
+        return gameService.getGamesUsersByGameComplete(gameRequestDto.getId(), gameRequestDto.isComplete());
     }
 
 

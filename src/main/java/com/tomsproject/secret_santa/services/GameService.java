@@ -1,17 +1,16 @@
 package com.tomsproject.secret_santa.services;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.GameEntity;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import com.tomsproject.secret_santa.enums.RoleEnum;
 import com.tomsproject.secret_santa.mapper.GameMapper;
 import com.tomsproject.secret_santa.mapper.UserMapper;
-import com.tomsproject.secret_santa.model.CreateUser;
-import com.tomsproject.secret_santa.model.Game;
-import com.tomsproject.secret_santa.model.GameUser;
+import com.tomsproject.secret_santa.model.CreateUserDto;
+import com.tomsproject.secret_santa.model.GameDto;
+import com.tomsproject.secret_santa.model.GameUserDto;
 import com.tomsproject.secret_santa.repo.AdminRepo;
 import com.tomsproject.secret_santa.repo.GameRepo;
-import com.tomsproject.secret_santa.repo.SantaUserPairRepo;
 import com.tomsproject.secret_santa.repo.SantaUserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,24 +34,22 @@ public class GameService {
     final AdminRepo adminRepo;
     final GameRepo gameRepo;
     final ASESMail asesMail;
-    final SantaUserAndAdminService santaUserAndAdminService;
+    final SantaUserService santaUserService;
 
 
 
-    public boolean createGame(CreateUser createUser) {
+    public boolean createGame(CreateUserDto createUserDto) {
 
-        AdminEntity adminDto = adminRepo.getById(createUser.getAdminId());
-        GameEntity gameDto = mapToGameDtoFromCreateUser(createUser);
+        Admin adminDto = adminRepo.getById(createUserDto.getAdminId());
+        GameEntity gameDto = mapToGameDtoFromCreateUser(createUserDto);
         gameDto.setGameCompleted(false);
 
         gameDto.setAdminDto(adminDto);
 
-
-
         try {
             if(gameDto.isStartNow()){gameDto.setStartDate(LocalDateTime.now());}
             GameEntity savedGame = gameRepo.save(gameDto);
-            List<SantaUserEntity> createdUserList = santaUserRepo.saveAll(createUsersList(createUser, adminDto,savedGame));
+            List<SantaUserEntity> createdUserList = santaUserRepo.saveAll(createUsersList(createUserDto, adminDto,savedGame));
             savedGame.setAdminDto(adminDto);
             savedGame.setUserList(createdUserList);
 
@@ -72,9 +69,9 @@ public class GameService {
 
 
 
-    public ResponseEntity<List<Game>> getGamesByAdminComplete(String adminId, boolean isCompleted){
+    public ResponseEntity<List<GameDto>> getGamesByAdminComplete(String adminId, boolean isCompleted){
 
-        ResponseEntity<List<Game>> badRequest =new ResponseEntity<>(Collections.emptyList(),HttpStatus.BAD_REQUEST);
+        ResponseEntity<List<GameDto>> badRequest =new ResponseEntity<>(Collections.emptyList(),HttpStatus.BAD_REQUEST);
 
 
         try{
@@ -89,8 +86,8 @@ public class GameService {
                          stream().
 
                          map(GameMapper::mapToGameFromGameDto)).
-                     peek(game -> game.setPercentageCompleteUsers
-                             (santaUserAndAdminService.countActiveUsers(game.getGameId()))).
+                     peek(gameDto -> gameDto.setPercentageCompleteUsers
+                             (santaUserService.countActiveUsers(gameDto.getGameId()))).
 
                          collect(Collectors.toList())
 
@@ -105,8 +102,8 @@ public class GameService {
     }
     }
 
-    public ResponseEntity<List<GameUser>> getGamesUsersByGameComplete(String gameId, boolean isCompleted){
-        ResponseEntity<List<GameUser>> badRequest =new ResponseEntity<>(Collections.emptyList(),HttpStatus.BAD_REQUEST);
+    public ResponseEntity<List<GameUserDto>> getGamesUsersByGameComplete(String gameId, boolean isCompleted){
+        ResponseEntity<List<GameUserDto>> badRequest =new ResponseEntity<>(Collections.emptyList(),HttpStatus.BAD_REQUEST);
 
         try{
 
@@ -128,9 +125,9 @@ public class GameService {
 
 
 
-    private List<SantaUserEntity> createUsersList(CreateUser createUser, AdminEntity adminDto, GameEntity savedGame) {
+    private List<SantaUserEntity> createUsersList(CreateUserDto createUserDto, Admin adminDto, GameEntity savedGame) {
         return
-                createUser.
+                createUserDto.
                         getEmailList().
                         stream().
                         map( email->

@@ -1,6 +1,6 @@
 package com.tomsproject.secret_santa.mapper;
 
-import com.tomsproject.secret_santa.entity.AdminEntity;
+import com.tomsproject.secret_santa.entity.Admin;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ class AdminMapperTest {
 
     @Test
     public void ShouldReturnAdminFromAdminDto(){
-        AdminEntity adminDto = new AdminEntity();
+        Admin adminDto = new Admin();
         adminDto.setAdminId(1);
         List<SantaUserEntity> santaUserDtoListEntity = new ArrayList<>();
         for (int i = 0; i < 100; i++) {

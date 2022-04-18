@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 
 @ToString
-public class TokenUser {
+public class TokenUserDto {
 
     private  long userid;
     private  String firstName;
@@ -23,7 +23,7 @@ public class TokenUser {
 
 
 
-    public TokenUser(boolean isUserCreate, long userid) {
+    public TokenUserDto(boolean isUserCreate, long userid) {
         this.userid = userid;
         this.isUserCreate = isUserCreate;
     }

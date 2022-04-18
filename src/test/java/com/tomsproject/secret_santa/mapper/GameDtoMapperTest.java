@@ -2,7 +2,7 @@ package com.tomsproject.secret_santa.mapper;
 
 import com.tomsproject.secret_santa.entity.GameEntity;
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
-import com.tomsproject.secret_santa.model.Game;
+import com.tomsproject.secret_santa.model.GameDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,23 +11,17 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class GameMapperTest {
+class GameDtoMapperTest {
 
-    Game game;
-    GameEntity gameDto;
+    GameDto gameDto;
     SantaUserEntity santaUserEntity;
     List<SantaUserEntity> santaUserEntityList;
 
 
     @BeforeEach
     void initialize() {
-        Game game = new Game();
+        GameDto gameDto = new GameDto();
 
-         gameDto = new GameEntity();
-        gameDto.setGameId(3);
-         santaUserEntity = new SantaUserEntity();
-       santaUserEntityList = new ArrayList<>();
-        gameDto.setUserList(santaUserEntityList);
 
 
     }

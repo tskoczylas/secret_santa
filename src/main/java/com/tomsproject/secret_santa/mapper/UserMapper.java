@@ -1,9 +1,9 @@
 package com.tomsproject.secret_santa.mapper;
 
 import com.tomsproject.secret_santa.entity.SantaUserEntity;
-import com.tomsproject.secret_santa.model.CreateUser;
-import com.tomsproject.secret_santa.model.GameUser;
-import com.tomsproject.secret_santa.model.TokenUser;
+import com.tomsproject.secret_santa.model.CreateUserDto;
+import com.tomsproject.secret_santa.model.GameUserDto;
+import com.tomsproject.secret_santa.model.TokenUserDto;
 import org.modelmapper.ModelMapper;
 
 
@@ -14,38 +14,38 @@ public class UserMapper {
 
    private static ModelMapper modelMapper;
 
-    public static TokenUser mapToTokenUserFromSantaUserDto(SantaUserEntity santaUserEntity) {
-        TokenUser tokenUser = new TokenUser();
+    public static TokenUserDto mapToTokenUserFromSantaUserDto(SantaUserEntity santaUserEntity) {
+        TokenUserDto tokenUserDto = new TokenUserDto();
         modelMapper = new ModelMapper();
-        modelMapper.map(santaUserEntity, tokenUser);
-        return tokenUser;
+        modelMapper.map(santaUserEntity, tokenUserDto);
+        return tokenUserDto;
     }
-    public static SantaUserEntity mapToSantaUserDtoFromTokenUser(TokenUser tokenUser) {
+    public static SantaUserEntity mapToSantaUserDtoFromTokenUser(TokenUserDto tokenUserDto) {
         SantaUserEntity santaUserEntity = new SantaUserEntity();
         modelMapper = new ModelMapper();
-        modelMapper.map(tokenUser, santaUserEntity);
+        modelMapper.map(tokenUserDto, santaUserEntity);
         return santaUserEntity;
     }
 
-    public static CreateUser mapToCreateUserFromSantaUserDto(SantaUserEntity santaUserEntity) {
-        CreateUser createUser = new CreateUser();
+    public static CreateUserDto mapToCreateUserFromSantaUserDto(SantaUserEntity santaUserEntity) {
+        CreateUserDto createUserDto = new CreateUserDto();
         modelMapper = new ModelMapper();
-        modelMapper.map(santaUserEntity, createUser);
-        return createUser;
+        modelMapper.map(santaUserEntity, createUserDto);
+        return createUserDto;
     }
 
-    public static SantaUserEntity mapToSantaUserDtoFromCreateUser(CreateUser createUser) {
+    public static SantaUserEntity mapToSantaUserDtoFromCreateUser(CreateUserDto createUserDto) {
         SantaUserEntity santaUserEntity = new SantaUserEntity();
         modelMapper = new ModelMapper();
-        modelMapper.map(createUser, santaUserEntity);
+        modelMapper.map(createUserDto, santaUserEntity);
         return santaUserEntity;
     }
 
-    public static GameUser mapToGameUserFromSantaUserDto(SantaUserEntity santaUserEntity) {
-        GameUser gameUser = new GameUser();
+    public static GameUserDto mapToGameUserFromSantaUserDto(SantaUserEntity santaUserEntity) {
+        GameUserDto gameUserDto = new GameUserDto();
         modelMapper = new ModelMapper();
-        modelMapper.map(santaUserEntity, gameUser);
-        return gameUser;
+        modelMapper.map(santaUserEntity, gameUserDto);
+        return gameUserDto;
     }
 
 
